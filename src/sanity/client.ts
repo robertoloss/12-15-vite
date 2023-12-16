@@ -1,14 +1,14 @@
-import {defineConfig} from 'sanity'
+//import {defineConfig} from 'sanity'
 import {createClient} from '@sanity/client'
 
 
-export default defineConfig({
-  name: 'default',
-  title: 'Amy Jackson Portfolio',
-
-  projectId: 'qyyz7qna',
-  dataset: 'production',
-})
+//export default defineConfig({
+//  name: 'default',
+//  title: 'Amy Jackson Portfolio',
+//
+//  projectId: 'qyyz7qna',
+//  dataset: 'production',
+//})
 
 
 export const client = createClient({
