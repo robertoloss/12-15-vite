@@ -47,7 +47,7 @@ export default function HeaderBar() {
 				>
 					Amy N Jackson
 				</Link>
-				<div className="hidden md:block"><NavBar previews={previews}/></div>
+				<div className="hidden md:block"><NavBar previews={previews!}/></div>
 				<div className="block md:hidden" onClick={hamMenuHandler}><RxHamburgerMenu size='32px'/></div>
 				{navDrawer && <NavDrawer previews={previews} hamMenuHandler={hamMenuHandler}/> }
 			</div>
