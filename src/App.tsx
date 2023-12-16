@@ -1,4 +1,4 @@
-
+import { ThemeProvider } from './components/ThemeProvider'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 //import Error from './pages/Error'
 import Home from './pages/Home'
@@ -38,8 +38,9 @@ const router = createBrowserRouter(routerArray)
 
   
 export default function App() {
-  return <RouterProvider 
+  return <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme"><RouterProvider 
     router={router} 
     fallbackElement={<div>Loading...</div>}
   />
+	</ThemeProvider>
 }

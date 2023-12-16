@@ -1,6 +1,7 @@
 import { 	useEffect, useState } from 'react'
 import { Project } from '../sanity/sanity-types'
 import { client } from '../sanity/client'
+import { ThemeToggle } from '@/components/ThemeToggle'
 
 function Home() {
   const [count, setCount] = useState(0)
@@ -21,7 +22,7 @@ function Home() {
 
   return (
     <>
-     
+			<ThemeToggle />
       <h1 className='bg-destructive'>Vite + React</h1>
 			{projects && projects.map((project: Project, key: number) => 
 				<h1 key={key}>{project.title}</h1>
