@@ -1,10 +1,26 @@
-import { useState } from 'react'
+import { 
+	//useEffect, 
+	useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+//import { client } from '../sanity/sanity.config.ts'
 
 function App() {
   const [count, setCount] = useState(0)
+
+	//useEffect(()=>{
+	//	async function getProjects() {
+	//		const data = await client.fetch(`
+	//			*[_type == "project"] | order(rank asc) { preview }
+	//		`)
+	//		setProjects(data);
+	//	}
+	//	getProjects()
+
+	//},[setProjects])
+
+	//projects && console.log(projects)
 
   return (
     <>
