@@ -14,7 +14,6 @@ function Home() {
         setPreviews(onlyPreviews);
     })();
   }, [setPreviews]);
-	previews && console.log(previews)
 
 	return (
 		<div className="flex flex-col relative px-8 pb-20 items-center">

@@ -21,8 +21,6 @@ export default function Hero() {
 			setWebsite(data[0]);
 		})()
 	},[setWebsite])
-
-	console.log("Website from Hero", website)
 	
 	return (
 		<div className="w-full min-h-[200px] flex flex-col justify-center items-center pt-20 md:pt-40 pb-20">

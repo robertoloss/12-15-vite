@@ -21,13 +21,11 @@ const components : PortableTextComponents = {
 export default function PreviewCard({ preview } : Props) {
 	
 	const imgUrl = preview.picture ? urlFor(preview.picture?.image)?.width(2400)?.url() : "" 
-	console.log("imgUrl", imgUrl)
-	console.log("preview fro PreviewCard", preview)
 
 	return (<>
 		<div className="flex flex-col md:flex-row relative p-6 border-2 rounded-lg w-full 
 		max-w-[960px] min-h-[360px] bg-muted gap-x-[80px] gap-y-4">
-			<div className="relative flex flex-col w-full h-[200px] md:h-auto">
+			<div className="relative flex flex-col justify-center items-center w-full h-fit md:h-auto">
 				<img src={imgUrl} alt="picture" />	
 			</div>
 			<div className="flex flex-col w-full justify-center ">
