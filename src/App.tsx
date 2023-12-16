@@ -12,7 +12,7 @@ function App() {
 	useEffect(()=>{
 		async function getProjects() {
 			const data = await client.fetch(`
-				*[_type == "project"] | order(rank asc) { preview }
+				*[_type == "project"]
 			`)
 			setProjects(data);
 		}
@@ -33,6 +33,9 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
+			{projects && projects.map((project: Project, key: number) => 
+				<h1 key={key}>{project.title}</h1>
+			)}
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
