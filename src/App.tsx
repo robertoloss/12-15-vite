@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { Project } from './sanity/sanity-types'
-import { client } from './sanity/sanity.config'
+import { client } from './sanity/client'
 
 function App() {
   const [count, setCount] = useState(0)
