@@ -24,7 +24,7 @@ const routerArray = [
         element: <About />,
       },
 			{
-				path: ':p',
+				path: '/projects/:p',
 				element: <Project/>
 			},
 			{
