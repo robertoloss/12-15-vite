@@ -16,9 +16,9 @@ function Home() {
   }, [setPreviews]);
 
 	return (
-		<div className="flex flex-col relative px-8 pb-20 items-center">
+		<div className="flex flex-col relative sm:px-8 pb-20 items-center">
 			<Hero/>
-			<div className="flex flex-col gap-y-10">{previews?.map(( preview: Preview, index: number ) =>
+			<div className="flex flex-col items-center gap-y-10">{previews?.map(( preview: Preview, index: number ) =>
 						<PreviewCard key={index} preview={preview}/>
 				)}
 			</div>

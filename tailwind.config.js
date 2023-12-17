@@ -27,6 +27,10 @@ export default {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
         },
+				bigpic: {
+					DEFAULT: "rgb(var(--bigpic))",
+					foreground: "hsl(var(--bigpic-foreground))"
+				},
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",

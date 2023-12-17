@@ -26,7 +26,8 @@ export default function ProjectsNavBar({ previews } : Prop) {
 						<Link to={`/projects/${preview.slug}`}>
 								<div className="flex flex-col w-full h-20 hover:bg-accent p-0 ">
 									<div className="flex flex-row h-full justify-start gap-x-4 items-center">
-										<div className="relative flex flex-col w-[200px] bg-gray-100 animate-fast-pulse h-full justify-center">
+										<div className={`relative flex flex-col w-[200px] bg-gray-100 
+											${!preview ? "animate-fast-pulse" : ""} h-full justify-center`}>
 											{preview.picture && <img src={urlFor(preview.picture.image)?.width(200).url()} alt="picture"/>}
 										</div>
 										<div className="flex flex-col h-full w-full overflow-hidden text-ellipsis items-start justify-center">
