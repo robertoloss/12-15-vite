@@ -11,8 +11,8 @@ export default function ThreeColumns({ columns } : Props) {
 	
 	return (
 		<div className="flex flex-wrap py-14 w-full max-w-[720px] justify-around">
-			{columns.map(( column: ColumnType ) => 
-				<Column column={column} />
+			{columns.map(( column: ColumnType, key: number ) => 
+				<Column key={key} column={column} />
 			)}	
 		</div> 
 	)

@@ -1,4 +1,6 @@
 import { Project } from "@/sanity/sanity-types";
+import Section from "@/components/Section";
+import { SectionType } from "@/sanity/sanity-types";
 import ThreeColumns from "@/components/ThreeColumns";
 import { urlFor } from "@/sanity/client";
 import HeroProject from "@/components/HeroProject";
@@ -24,7 +26,7 @@ export default function ProjectPage() {
 		})()	
 	},[projectSlug])
 	
-	console.log("Project : ", project)
+	//console.log("Project : ", project)
 	const imgUrl = project ? 
 									project.wide_picture ? 
 										urlFor(project.wide_picture.image)?.width(2400)?.url() 
@@ -39,14 +41,9 @@ export default function ProjectPage() {
 			{ project && <HeroProject project={project} /> }
 			{ (project && project.wide_picture) && <BigPicture imgUrl={imgUrl!}/> }
 			{ project?.three_cols_yesNo && <ThreeColumns columns={columns} /> }
+			{ project?.sections?.map((section: SectionType, key: number) => 
+						<Section section={section} sectionNum={key} key={key}/>) }
 			
 		</div>
 	)
 }
-
-
-
-//					
-//					project.sections?.map((section:any, key: number) => 
-//						<Section section={section} sectionNum={key} key={key}/>)
-
