@@ -1,5 +1,5 @@
 import Column from "./Column"
-import { ColumnType } from "@/sanity/sanity-types"
+import { ColumnType } from "@/utils/create-columns"
 
 type Props = {
 	columns: ColumnType[]
