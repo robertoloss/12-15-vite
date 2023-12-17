@@ -7,7 +7,7 @@ type Props = {
 
 const components : PortableTextComponents = {
   block: {
-    normal: ({children}) => <h1 className="text-lg font-normal text-center sm:text-left leading-6">{children}</h1>,
+    normal: ({children}) => <h1 className="text-lg font-normal text-left leading-6">{children}</h1>,
   },
 	marks: {
     em: ({children}) => <p className="text-lg font-normal text-destructive leading-6">{children}</p>,
