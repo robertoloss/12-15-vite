@@ -13,7 +13,7 @@ export default function PictureSection({ pictureSection } : Props) {
 	const bgColor = pictureSection.background_blue ? 'bg-bigpic' : 'bg-background'
 
 	const screen = useMediaQuery()
-	console.log("screen: ", screen)
+	//console.log("screen: ", screen)
 	//console.log("Height = ", height)
 
 	return (

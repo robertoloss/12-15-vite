@@ -14,16 +14,17 @@ const components : PortableTextComponents = {
 }
 type Prop = {
 	previews: Preview[]
+	hamMenuHandler?: ()=>void
 }
 
-export default function ProjectsNavBar({ previews } : Prop) {
+export default function ProjectsNavBar({ previews, hamMenuHandler } : Prop) {
 
 	return (
 		<div className="flex flex-col w-[320px] p-4 gap-y-2" >
 			{previews?.map(( preview, key : number ) => { 
 				return (
 					<div className="w-full" key={key}>
-						<Link to={`/projects/${preview.slug}`}>
+						<Link onClick={hamMenuHandler} to={`/projects/${preview.slug}`}>
 								<div className="flex flex-col w-full h-20 hover:bg-accent p-0 ">
 									<div className="flex flex-row h-full justify-start gap-x-4 items-center">
 										<div className={`relative flex flex-col w-[200px] bg-gray-100 

@@ -39,7 +39,7 @@ export default function ProjectPage() {
 			{ ( loaded && !project ) && <h1>Uh oh! Something went wrong...</h1> }
 
 			{ project && <HeroProject project={project} /> }
-			{ (project && project.wide_picture) && <BigPicture imgUrl={imgUrl!}/> }
+			{ (project && project.wide_picture) && <BigPicture imgUrl={imgUrl} project={project}/> }
 			{ project?.three_cols_yesNo && <ThreeColumns columns={columns} /> }
 			{ project?.sections?.map((section: SectionType, key: number) => 
 						<Section section={section} sectionNum={key} key={key}/>) }

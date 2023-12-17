@@ -41,6 +41,8 @@ export type SectionType = SanityValues["section"]
 export type ThreeCols = SanityValues["three_cols"]
 export type Website = SanityValues["website"]
 
+export type Image = SanityValues["picture"]["image"]
+
 
 
 
