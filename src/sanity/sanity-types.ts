@@ -40,3 +40,7 @@ export type Quote = SanityValues["quote"]
 export type Section = SanityValues["section"]
 export type ThreeCols = SanityValues["three_cols"]
 export type Website = SanityValues["website"]
+
+
+
+
