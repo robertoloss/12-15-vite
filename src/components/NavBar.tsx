@@ -25,7 +25,7 @@ export default function NavBar({ previews } : Prop) {
 					<NavigationMenuTrigger className="text-lg">About</NavigationMenuTrigger>
 					<NavigationMenuContent >
 						<div className="w-[320px] p-4" >
-						<NavigationMenuLink >Link</NavigationMenuLink>
+						<NavigationMenuLink>Link </NavigationMenuLink>
 						</div>
 					</NavigationMenuContent>
 				</NavigationMenuItem>
