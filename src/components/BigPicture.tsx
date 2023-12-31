@@ -30,7 +30,7 @@ export default function BigPicture() {
 
 	return (<>
 		<div 
-			className="flex flex-col w-[calc(100%+64px)] bg-bigpic h-fit py-10 px-4 mx-[-16px] items-center"
+			className="flex flex-col w-[calc(100%+64px)] bg-bigpic h-fit py-10 px-4 mx-[-16px] items-center justify-center"
 			style={{ minHeight: `${screen / 2.3}px` }}> 
 				<div className="relative flex flex-col w-full max-w-[1096px] items-center"> 
 					<img src={imgUrl} alt="picture" className="w-full"/>	
