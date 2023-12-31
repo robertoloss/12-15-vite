@@ -8,14 +8,23 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from '../components/ui/navigation-menu.tsx'
-import { ThemeToggle } from "./ThemeToggle.tsx";
+//import { ThemeToggle } from "./ThemeToggle.tsx";
 import { Preview } from "@/sanity/sanity-types.ts";
+import { useState } from "react";
 
 type Prop = {
 	previews: Preview[]
 }
 
 export default function NavBar({ previews } : Prop) {
+	const [open, setOpen] = useState<boolean | undefined>(true);
+	function openHandler() {
+		setOpen(false);
+		setTimeout(()=>{
+			setOpen(true)
+		},500)
+		console.log("open = ", open)
+	}
 
 	return (<div className="flex flex-row bg-background space-x-8 w-fit items-center">
 		<NavigationMenu>
@@ -31,9 +40,9 @@ export default function NavBar({ previews } : Prop) {
 				</NavigationMenuItem>
 
 				<NavigationMenuItem>
-					<NavigationMenuTrigger className="text-lg">Work</NavigationMenuTrigger>
-					<NavigationMenuContent>
-						<ProjectsNavBar previews={previews} />	
+					<NavigationMenuTrigger  className="text-lg">Work</NavigationMenuTrigger>
+					<NavigationMenuContent onClick={openHandler}  >
+						{open && <ProjectsNavBar previews={previews} /> }	
 					</NavigationMenuContent>
 				</NavigationMenuItem>
 
@@ -49,10 +58,9 @@ export default function NavBar({ previews } : Prop) {
 
 			</NavigationMenuList>
 		</NavigationMenu>
-		<ThemeToggle/>
+		{/* <ThemeToggle/> */}
 	</div>)
 }
-
 
 
 

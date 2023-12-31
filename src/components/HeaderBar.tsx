@@ -40,7 +40,7 @@ export default function HeaderBar() {
 				transition: 'all 0.5s '
 			}}
 		>
-			<div className="flex flex-row h-full w-full max-w-7xl justify-between items-center text-foreground p-4" >
+			<div className="flex flex-row h-full w-full max-w-7xl justify-between items-center  p-4" >
 				<Link to={'/'}
 					className="w-fit text-2xl font-semibold"
 				>

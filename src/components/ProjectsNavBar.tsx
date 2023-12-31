@@ -20,7 +20,7 @@ type Prop = {
 export default function ProjectsNavBar({ previews, hamMenuHandler } : Prop) {
 
 	return (
-		<div className="flex flex-col w-[320px] p-4 gap-y-2" >
+		<div className="flex flex-col w-[320px] p-4 gap-y-2 text-[#3D4048]" >
 			{previews?.map(( preview, key : number ) => { 
 				return (
 					<div className="w-full" key={key}>
