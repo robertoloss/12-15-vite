@@ -28,5 +28,10 @@ export const picture = defineType({
       type: 'string',
       title: 'Alt',
     }),
+		defineField({
+      name: 'url',
+      type: 'string',
+      title: 'URL Link'
+    }),
   ]
 })

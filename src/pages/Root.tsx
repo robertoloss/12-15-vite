@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import HeaderBar from "@/components/HeaderBar";
 import { Outlet } from "react-router-dom";
 
@@ -10,6 +11,7 @@ export default function Root() {
 		<>
 			<HeaderBar/>
 			<Outlet/>
+			<Footer/>
 		</>
 	)
 }

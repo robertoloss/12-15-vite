@@ -42,5 +42,20 @@ export const website = defineType({
 			type: 'picture',
 			title: 'ABOUT: Picture'
 		}),
+		defineField({
+			name: 'footer_email',
+			type: 'text',
+			title: 'FOOTER: Email',
+		}),
+		defineField({
+			name: 'icons',
+			type: 'array',
+			of: [ defineArrayMember({ type: 'picture'})] 
+		}),
+		defineField({
+			name: 'footer_right_text',
+			type: 'text',
+			title: 'FOOTER: right text',
+		}),
 	]
 })
