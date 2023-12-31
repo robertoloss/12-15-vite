@@ -4,13 +4,15 @@ import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
+  //NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
 } from '../components/ui/navigation-menu.tsx'
 //import { ThemeToggle } from "./ThemeToggle.tsx";
 import { Preview } from "@/sanity/sanity-types.ts";
 import { useState } from "react";
+import { Link } from "react-router-dom"
+
 
 type Prop = {
 	previews: Preview[]
@@ -32,10 +34,14 @@ export default function NavBar({ previews } : Prop) {
 
 				<NavigationMenuItem>
 					<NavigationMenuTrigger className="text-lg">About</NavigationMenuTrigger>
-					<NavigationMenuContent >
-						<div className="w-[320px] p-4" >
-						<NavigationMenuLink>Link </NavigationMenuLink>
-						</div>
+					<NavigationMenuContent onClick={openHandler}>
+						{open && <div className="w-[320px] p-4" >
+							<Link to={'/about'}  className="self-start w-fit text-2xl mt-10 font-normal">
+								<div className="w-full p-2 text-xl hover:bg-gray-100">
+									About
+								</div>
+							</Link>
+						</div>}
 					</NavigationMenuContent>
 				</NavigationMenuItem>
 
@@ -48,10 +54,14 @@ export default function NavBar({ previews } : Prop) {
 
 				<NavigationMenuItem>
 					<NavigationMenuTrigger className="text-lg">Contact</NavigationMenuTrigger>
-					<NavigationMenuContent>
-						<div className="w-[320px] p-4" >
-						<NavigationMenuLink >Link</NavigationMenuLink>
-						</div>
+					<NavigationMenuContent onClick={openHandler}>
+						{open && <div className="w-[320px] p-4" >
+							<Link to={'/contact'}  className="self-start w-fit text-2xl mt-10 font-normal">
+								<div className="w-full p-2 text-xl hover:bg-gray-100">
+									Contact
+								</div>
+							</Link>
+						</div>}
 					</NavigationMenuContent>
 				</NavigationMenuItem>
 

@@ -36,3 +36,4 @@ export async function getProject(slug:string) {
 		`*[_type == "project" && preview.slug == "${slug}"]`
 	)
 }
+

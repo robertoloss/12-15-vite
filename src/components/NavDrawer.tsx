@@ -45,10 +45,10 @@ export default function NavDrawer({ hamMenuHandler, previews } : Props) {
 							<ProjectsNavBar hamMenuHandler={hamMenuHandler} previews={previews} />
 						</div>	
 					</div>
-					<Link to={'/'} onClick={hamMenuHandler} className="self-start w-full text-2xl mt-10 font-normal">
+					<Link to={'/about'} onClick={hamMenuHandler} className="self-start w-full text-2xl mt-10 font-normal">
 						About
 					</Link>
-					<Link to={'/'} onClick={hamMenuHandler} className="self-start text-2xl w-full mt-10 font-normal">
+					<Link to={'/contact'} onClick={hamMenuHandler} className="self-start text-2xl w-full mt-10 font-normal">
 						Contact
 					</Link>
 				</div>

@@ -1,8 +1,68 @@
+import { getWebsiteInfo } from "@/sanity/client"
+import { urlFor } from "@/sanity/client"
+import { useState, useEffect } from "react"
+import { Website } from "@/sanity/sanity-types"
+import { PortableTextComponents, PortableText } from "@portabletext/react"
 
-
-
+const components : PortableTextComponents = {
+  block: {
+    normal: ({children}) => <h1 className="text-lg font-normal text-left leading-6">{children}</h1>,
+  },
+	marks: {
+    em: ({children}) => <p className="text-lg font-normal text-destructive leading-6">{children}</p>,
+	},
+}
+const componentsExpertise : PortableTextComponents = {
+  block: {
+    normal: ({children}) => <h1 className="text-lg font-normal text-center leading-6">{children}</h1>,
+  },
+	marks: {
+    em: ({children}) => <p className="text-lg font-normal text-destructive leading-6">{children}</p>,
+	},
+}
 
 export default function About() {
+	const [website, setWebsite] = useState<Website | null>(null)
 
-	return <h1>About</h1>
+	useEffect(()=>{
+		(async () => {
+			const data = await getWebsiteInfo()
+			setWebsite(data[0])
+		})()
+	},[setWebsite])
+
+
+	return (<>
+		{website && <div className="flex flex-col px-6"> 
+			<div className="py-10 flex flex-col w-full items-center">
+				<div className="flex flex-col items-center gap-y-4 w-full max-w-[640px]">
+					<div className="flex flex-col items-center">
+						<p className="font-bold text-2xl text-destructive">
+							About
+						</p>
+						<p className="font-bold text-2xl text-center">
+							{website?.name}
+						</p>
+					</div>
+					<div className="w-full h-0 border-t border-[#8e9098]"/>
+					<PortableText components={components} value={website.about_description!} />
+				</div>
+			</div>
+			<div className="py-10 flex flex-col w-full items-center">
+				<div className="flex flex-col items-center gap-y-4 w-full max-w-[640px]">
+					<div className="flex flex-col items-center">
+						<p className="font-bold text-2xl text-center">
+							Expertise	
+						</p>
+					</div>
+					<div className="w-full h-0 border-t border-[#8e9098]"/>
+					<PortableText components={componentsExpertise} value={website.about_expertise!} />
+				</div>
+			</div>
+			<div className="relative flex flex-col w-full max-w-[1096px] self-center mt-[40px] mb-[160px]"> 
+				<img src={urlFor(website.about_picture?.image)?.width(2400)?.url()} alt="img"/>
+			</div>
+		</div>}
+	</>)
 }
+	
