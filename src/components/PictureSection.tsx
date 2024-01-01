@@ -7,7 +7,7 @@ type Props = {
 	pictureSection : PictureSectionType
 	index : number
 	len : number
-	thisBlueNextWhite : boolean
+	thisBlueNextWhite : boolean | undefined
 }
 
 export default function PictureSection({ pictureSection , index, len, thisBlueNextWhite} : Props) {

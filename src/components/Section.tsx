@@ -35,7 +35,7 @@ export default function Section({ section, sectionNum } : Props) {
 									index={key} 
 									key={sectionNum*10 + key}
 									thisBlueNextWhite={thisBlueNextWhite}
-								/>	
+							/>	
 			}
 		)} 
 		
