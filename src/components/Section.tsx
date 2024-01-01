@@ -25,8 +25,18 @@ export default function Section({ section, sectionNum } : Props) {
 		{section.quote && <Quote quote={section.quote} author={section.quote.author!} /> }
 
 		{section.picture_sections  && section.picture_sections
-		.map((pSection: typeof section.picture_sections[0], key: number) =>
-			<PictureSection pictureSection={pSection} key={sectionNum*10 + key}/>	
+		.map((pSection: typeof section.picture_sections[0], key: number) => {
+				const thisBlueNextWhite = key < section.picture_sections!.length -1 &&
+																pSection.background_blue &&
+																!section.picture_sections![key + 1].background_blue
+				return	<PictureSection 
+									pictureSection={pSection} 
+									len={section.picture_sections!.length} 
+									index={key} 
+									key={sectionNum*10 + key}
+									thisBlueNextWhite={thisBlueNextWhite}
+								/>	
+			}
 		)} 
 		
 	</>)

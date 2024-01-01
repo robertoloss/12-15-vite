@@ -35,9 +35,14 @@ export default function Footer() {
 					)}
 					</div>
 				</div>
-				<h1>
-					{website.footer_right_text}
-				</h1>
+				<div className="flex flex-row flex-wrap">	
+					<h1 className="mr-1 min-w-[200px]">
+						{website.footer_right_text!.split('©')[0]}
+					</h1>
+					<h1 className="mr-1 min-w-[200px]">
+						©{website.footer_right_text!.split('©')[1]}
+					</h1>
+				</div>
 			</div>
 		</div>}
 	</>)

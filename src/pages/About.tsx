@@ -44,7 +44,7 @@ export default function About() {
 							{website?.name}
 						</p>
 					</div>
-					<div className="w-full h-0 border-t border-[#8e9098]"/>
+					<div className="w-full h-0 border-t border-[#B8B9BA]"/>
 					<PortableText components={components} value={website.about_description!} />
 				</div>
 			</div>
@@ -55,7 +55,7 @@ export default function About() {
 							Expertise	
 						</p>
 					</div>
-					<div className="w-full h-0 border-t border-[#8e9098]"/>
+					<div className="w-full h-0 border-t border-[#B8B9BA]"/>
 					<PortableText components={componentsExpertise} value={website.about_expertise!} />
 				</div>
 			</div>
