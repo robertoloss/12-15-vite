@@ -13,7 +13,6 @@ type Props = {
 export default function NavDrawer({ hamMenuHandler, previews } : Props) {
 	const [show, setShow] = useState<boolean>(false)
 	function showHandler() {
-		console.log("click")
 		setShow(prev => !prev)
 	}
  

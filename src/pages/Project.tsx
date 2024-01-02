@@ -27,7 +27,7 @@ export default function ProjectPage() {
 	const columns = project ? createColumns(project) : []	
 
 	return (
-		<div className="flex flex-col items-center px-8 w-full mb-[320px]">
+		<div className="flex flex-col items-center px-8 w-full min-h-[100vh]">
 			{ ( loaded && !project ) && <h1>Uh oh! Something went wrong...</h1> }
 
 			{ project && <HeroProject project={project} /> }

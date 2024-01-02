@@ -25,7 +25,6 @@ export default function NavBar({ previews } : Prop) {
 		setTimeout(()=>{
 			setOpen(true)
 		},500)
-		console.log("open = ", open)
 	}
 
 	return (<div className="flex flex-row bg-background space-x-8 w-fit items-center">

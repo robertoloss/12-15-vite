@@ -16,7 +16,6 @@ export default function PictureSection({ pictureSection , index, len, thisBlueNe
 	const bgColor = pictureSection.background_blue ? 'bg-bigpic' : 'bg-background'
 
 	const screen = useMediaQuery()
-	console.log("len = ", len)
 
 	return (
 		<div className={`flex flex-col w-[calc(100%+64px)] ${bgColor} 

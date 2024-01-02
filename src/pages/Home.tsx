@@ -17,7 +17,7 @@ function Home() {
 
 
 	return (
-		<div className="flex flex-col relative sm:px-8 pb-20 items-center">
+		<div className="flex flex-col relative sm:px-8 pb-20 items-center min-h-[100vh]">
 			<Hero/>
 			<div className="flex flex-col items-center gap-y-10 mb-[160px]">
 			{previews?.map(( preview: Preview, index: number ) =>
