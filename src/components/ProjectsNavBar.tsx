@@ -32,7 +32,7 @@ export default function ProjectsNavBar({ previews, hamMenuHandler } : Prop) {
 											{preview.picture && <img src={urlFor(preview.picture.image)?.width(200).url()} alt="picture"/>}
 										</div>
 										<div className="flex flex-col h-full w-full overflow-hidden text-ellipsis items-start justify-center">
-											<h1 className="w-full font-bold"> {preview.title} </h1>
+											<h1 className="w-full font-bold"> {preview.navBarTitle} </h1>
 												<PortableText components={components} value={preview.navBarDescription}/>
 										</div>
 									</div>

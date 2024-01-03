@@ -25,6 +25,11 @@ export const preview = defineType({
 			title: 'Title'
 		}),
 		defineField({
+			name: 'navBarTitle',
+			type: 'string',
+			title: 'NavBar Title'
+		}),
+		defineField({
 			name: 'description',
 			type: 'array',
 			of: [defineArrayMember({type: 'block'})],
