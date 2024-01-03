@@ -15,7 +15,7 @@ export default function Footer() {
 	},[])
 
 	return (<>
-		{website && <div className="flex flex-col w-full h-[210px] items-center justify-center bg-[#EEEFF0] font-light px-6">
+		{website && <div className="flex flex-col w-full h-[210px] items-center justify-center bg-[#EEEFF0] font-light px-6 gap-y-1">
 			<div className="flex flex-row flex-wrap w-full max-w-[1200px] justify-between items-center gap-y-4">
 				<div className="flex flex-row flex-wrap gap-4 items-center">
 					<a 
@@ -35,12 +35,24 @@ export default function Footer() {
 					)}
 					</div>
 				</div>
-				<div className="flex flex-row flex-wrap">	
-					<h1 className="mr-1 min-w-[200px]">
-						{website.footer_right_text!.split('©')[0]}
+				<div className="flex flex-col gap-y-2">
+					<div className="flex flex-row flex-wrap">	
+						<h1 className="mr-1 min-w-[200px]">
+							{website.footer_right_text!.split('©')[0]}
+						</h1>
+						<h1 className="mr-1 min-w-[200px]">
+							©{website.footer_right_text!.split('©')[1]}
+						</h1>
+					</div>
+				</div>
+			</div>
+			<div className="flex flex-row flex-wrap w-full max-w-[1200px] justify-start min-[904px]:justify-end items-center gap-y-4">
+				<div className="flex flex-row flex-wrap ">	
+					<h1 className="mr-1">
+						Web development	
 					</h1>
 					<h1 className="mr-1 min-w-[200px]">
-						©{website.footer_right_text!.split('©')[1]}
+						© 2024 Roberto Loss						
 					</h1>
 				</div>
 			</div>

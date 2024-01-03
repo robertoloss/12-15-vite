@@ -42,7 +42,7 @@ export default function HeaderBar() {
 		>
 			<div className="flex flex-row h-full w-full max-w-7xl justify-between items-center  p-4" >
 				<Link to={'/'}
-					className="w-fit text-2xl font-light text-destructive"
+					className="w-fit text-2xl font-raleway font-light text-destructive"
 				>
 					Amy N Jackson
 				</Link>

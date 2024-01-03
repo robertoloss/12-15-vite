@@ -22,7 +22,7 @@ export default function HeroProject({ project } : {project: Project}) {
 	return (
 		<div className="w-full min-h-[200px] flex flex-col justify-center items-center pt-20 md:pt-20 pb-20">
 			<div className="flex flex-col max-w-[960px] w-full justify-center items-center gap-y-4 "> 
-				<h1 className="text-[18px] text-destructive font-semibold">{project.name}</h1>
+				<h1 className="text-[18px] text-destructive font-semibold font-raleway">{project.name}</h1>
 				<h1 className="text-[24px] font-semibold">{project.title}</h1>
 				<div className="w-full h-0 border-t border-[B8B9BA] "/>
 				<div className='flex flex-wrap gap-[52px] items-center w-fit justify-center'>
