@@ -43,7 +43,7 @@ export default function Contact() {
 	function labelClassName(input: "name" | "email" | "message") : string {
 		const common = ' flex absolute top-[10px] z-10 ml-2 font-normal transition-all ease-out duration-200 '
 		const onFocus = ' top-[4px] text-blue-600 text-xs ' 
-		const onBlur = ' text-gray-500 '
+		const onBlur = ' text-gray-500'
 		const specific = {
 			name: nameFocus || nameInputRef.current?.value  ? onFocus : onBlur, 
 			email: emailFocus || emailInputRef.current?.value  ? onFocus : onBlur,

@@ -1,8 +1,9 @@
-import { getWebsiteInfo } from "@/sanity/client"
+//import { getWebsiteInfo } from "@/sanity/client"
 import { urlFor } from "@/sanity/client"
-import { useState, useEffect } from "react"
+//import { useState, useEffect } from "react"
 import { Website } from "@/sanity/sanity-types"
 import { PortableTextComponents, PortableText } from "@portabletext/react"
+import { useLoaderData } from "react-router-dom"
 
 const components : PortableTextComponents = {
   block: {
@@ -22,15 +23,16 @@ const componentsExpertise : PortableTextComponents = {
 }
 
 export default function About() {
-	const [website, setWebsite] = useState<Website | null>(null)
+	//const [website, setWebsite] = useState<Website | null>(null)
 
-	useEffect(()=>{
-		(async () => {
-			const data = await getWebsiteInfo()
-			setWebsite(data[0])
-		})()
-	},[setWebsite])
-
+	//useEffect(()=>{
+	//	(async () => {
+	//		const data = await getWebsiteInfo()
+	//		setWebsite(data[0])
+	//	})()
+	//},[setWebsite])
+	
+	const website = useLoaderData() as Website
 
 	return (<div className="flex flex-col min-h-[100vh] mb-[200px]">
 		{website && <div className="flex flex-col px-6"> 

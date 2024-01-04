@@ -1,7 +1,7 @@
 import { PortableText, PortableTextComponents } from '@portabletext/react'
-import { getWebsiteInfo } from '@/sanity/client'
+//import { getWebsiteInfo } from '@/sanity/client'
 import { Website } from '@/sanity/sanity-types'
-import { useEffect, useState} from 'react';
+//import { useEffect, useState} from 'react';
 
 const components : PortableTextComponents = {
   block: {
@@ -12,15 +12,19 @@ const components : PortableTextComponents = {
 	},
 }
 
-export default function Hero() {
-	const [website, setWebsite] = useState<Website | null>(null);	
-	
-	useEffect(()=>{
-		(async ()=>{
-			const data = await getWebsiteInfo();
-			setWebsite(data[0]);
-		})()
-	},[setWebsite])
+type Props = {
+	website : Website
+}
+
+export default function Hero({ website } : Props) {
+	//const [website, setWebsite] = useState<Website | null>(null);	
+	//
+	//useEffect(()=>{
+	//	(async ()=>{
+	//		const data = await getWebsiteInfo();
+	//		setWebsite(data[0]);
+	//	})()
+	//},[setWebsite])
 	
 	return (
 		<div className="w-full min-h-[200px] flex flex-col justify-center items-center px-8 sm:px-0 pt-20 md:pt-40 pb-20">
