@@ -40,19 +40,19 @@ export default function Footer() {
 						<h1 className="mr-1 min-w-[200px]">
 							{website.footer_right_text!.split('©')[0]}
 						</h1>
-						<h1 className="mr-1 min-w-[200px]">
+						<h1 className="mr-1 min-w-[200px] sm:min-w-[0px]">
 							©{website.footer_right_text!.split('©')[1]}
 						</h1>
 					</div>
 				</div>
 			</div>
-			<div className="flex flex-row flex-wrap w-full max-w-[1200px] justify-start min-[904px]:justify-end items-center gap-y-4">
+			<div className="flex flex-row flex-wrap w-full max-w-[1200px] justify-start min-[858px]:justify-end items-center gap-y-4">
 				<div className="flex flex-row flex-wrap ">	
 					<h1 className="mr-1">
-						Web development	
+						Web developer | 	
 					</h1>
-					<h1 className="mr-1 min-w-[200px]">
-						© 2024 Roberto Loss						
+					<h1 className="mr-1 ">
+						Roberto Loss						
 					</h1>
 				</div>
 			</div>

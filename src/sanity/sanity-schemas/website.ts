@@ -53,6 +53,11 @@ export const website = defineType({
 			of: [ defineArrayMember({ type: 'picture'})] 
 		}),
 		defineField({
+			name: 'nav_icons',
+			type: 'array',
+			of: [ defineArrayMember({ type: 'picture'})] 
+		}),
+		defineField({
 			name: 'footer_right_text',
 			type: 'text',
 			title: 'FOOTER: right text',

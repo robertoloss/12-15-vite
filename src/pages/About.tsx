@@ -32,7 +32,7 @@ export default function About() {
 	},[setWebsite])
 
 
-	return (<div className="flex flex-col min-h-[100vh]">
+	return (<div className="flex flex-col min-h-[100vh] mb-[200px]">
 		{website && <div className="flex flex-col px-6"> 
 			<div className="py-10 flex flex-col w-full items-center">
 				<div className="flex flex-col items-center gap-y-4 w-full max-w-[640px]">
@@ -61,6 +61,9 @@ export default function About() {
 			</div>
 			<div className="relative flex flex-col w-full max-w-[1096px] self-center mt-[40px] mb-[160px]"> 
 				<img src={urlFor(website.about_picture?.image)?.width(2400)?.url()} alt="img"/>
+				<h1 className="self-center text-white -mt-[200px] max-w-[400px] text-center px-6">
+					{website.about_picture?.name}
+				</h1>
 			</div>
 		</div>}
 	</div>)

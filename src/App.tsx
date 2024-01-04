@@ -1,4 +1,5 @@
 import { ThemeProvider } from './components/ThemeProvider'
+import { RouteObject } from 'react-router-dom'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 //import Error from './pages/Error'
 import Home from './pages/Home'
@@ -7,6 +8,7 @@ import About from './pages/About'
 import Project from './pages/Project'
 //import { Outlet } from 'react-router-dom'
 import Contact from './pages/Contact'
+import { getProject } from './sanity/client'
 
 const routerArray = [
   { 
@@ -25,7 +27,11 @@ const routerArray = [
       },
 			{
 				path: '/projects/:p',
-				element: <Project/>
+				element: <Project/>,
+				loader: async ({ params } : { params : { p : string } }) => {
+					const project = await getProject(params.p);
+					return project;
+				}
 			},
 			{
 				path: 'contact',
@@ -34,7 +40,7 @@ const routerArray = [
     ]
   }
 ]
-const router = createBrowserRouter(routerArray)
+const router = createBrowserRouter(routerArray as RouteObject[]) 
 
   
 export default function App() {

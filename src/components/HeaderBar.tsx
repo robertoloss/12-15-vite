@@ -44,7 +44,7 @@ export default function HeaderBar() {
 				<Link to={'/'}
 					className="w-fit text-2xl font-raleway font-light text-destructive"
 				>
-					Amy N Jackson
+					Amy Jackson
 				</Link>
 				<div className="hidden md:block"><NavBar previews={previews!}/></div>
 				<div className="block md:hidden" onClick={hamMenuHandler}><RxHamburgerMenu size='32px'/></div>
