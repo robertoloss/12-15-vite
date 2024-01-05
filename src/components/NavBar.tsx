@@ -1,90 +1,80 @@
 import ProjectsNavBar from "./ProjectsNavBar";
-//import ThemeToggle from "./ThemeToggle";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  //NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from '../components/ui/navigation-menu.tsx'
-//import { ThemeToggle } from "./ThemeToggle.tsx";
+import { useRef } from "react";
 import { Preview } from "@/sanity/sanity-types.ts";
 import { useState } from "react";
 import { Link } from "react-router-dom"
-
 
 type Prop = {
 	previews: Preview[]
 }
 
 export default function NavBar({ previews } : Prop) {
-	const [open, setOpen] = useState<boolean | undefined>(true);
-	function openHandler() {
-		setOpen(false);
-		setTimeout(()=>{
+	const [open, setOpen] = useState<boolean>(false);
+	const [forceClose, setForceClose] = useState(false)
+	const again = useRef(false);
+	
+	function openHandler(status : "open" | "close") {
+		if (status === "open") {
 			setOpen(true)
-		},500)
+			again.current = true
+		} else {
+			again.current = false 
+			setTimeout(()=>{
+				if (again.current === false) setOpen(false)
+			}, 300)
+		}
+	}
+	function openCurry(status: "open" | "close") {
+		return function handler() {
+			openHandler(status)
+		}
 	}
 
-	return (<div className="flex flex-row bg-background space-x-8 w-fit items-center">
-		<NavigationMenu>
-			<NavigationMenuList>
-
-				<NavigationMenuItem>
-					<NavigationMenuTrigger className="text-lg">About</NavigationMenuTrigger>
-					<NavigationMenuContent onClick={openHandler}>
-						{open && <div className="w-[320px] p-4" >
-							<Link to={'/about'}  className="self-start w-fit text-2xl mt-10 font-normal">
-								<div className="w-full p-2 text-xl hover:bg-gray-100">
-									About
-								</div>
-							</Link>
-						</div>}
-					</NavigationMenuContent>
-				</NavigationMenuItem>
-
-				<NavigationMenuItem>
-					<NavigationMenuTrigger  className="text-lg">Work</NavigationMenuTrigger>
-					<NavigationMenuContent onClick={openHandler}  >
-						{open && <ProjectsNavBar previews={previews} /> }	
-					</NavigationMenuContent>
-				</NavigationMenuItem>
-
-				<NavigationMenuItem>
-					<NavigationMenuTrigger className="text-lg">Contact</NavigationMenuTrigger>
-					<NavigationMenuContent onClick={openHandler}>
-						{open && <div className="w-[320px] p-4" >
-							<Link to={'/contact'}  className="self-start w-fit text-2xl mt-10 font-normal">
-								<div className="w-full p-2 text-xl hover:bg-gray-100">
-									Contact
-								</div>
-							</Link>
-						</div>}
-					</NavigationMenuContent>
-				</NavigationMenuItem>
-
-
-			</NavigationMenuList>
-		</NavigationMenu>
-		{/* <ThemeToggle/> */}
-	</div>)
+	return (
+		<div className="flex flex-row bg-background space-x-8 w-fit text-lg font-medium items-center">
+			<Link to={'/about'}  className="w-fit">
+				<div className="w-fit hover:text-destructive">
+					About
+				</div>
+			</Link>
+			<div className="flex flex-col ">
+				<div 
+					className={`w-fit cursor-pointer z-10 hover:text-destructive`}
+					onMouseEnter={openCurry("open")}
+					onMouseLeave={openCurry(("close"))}
+				>
+					Work
+				</div >
+					{!forceClose && 
+					<div className={`absolute top-[60px] shadow-xl right-[54px] opacity-0 transition-{opacity}
+						 w-fit overflow-hidden bg-white rounded-lg 
+						${open ? 'h-fit p-4 opacity-100 border-2 border-gray-200':'h-0'}`}>
+						<ProjectsNavBar 
+							previews={previews}
+							openCurry={openCurry}
+							open={open}
+							setForceClose={setForceClose}
+							forceClose={forceClose}
+						/>
+					</div>}
+			</div>
+			<Link to={'/contact'}  className="w-fit ">
+				<div className="w-fit hover:text-destructive">
+					Contact
+				</div>
+			</Link>
+			{/* <ThemeToggle/> */}
+		</div>
+	)
 }
 
-
-
-
-
-
-//<div
-//			className="flex flex-row bg-background space-x-8 items-center"
-//		>
-//			<Link href={"/about"} className="text-lg font-semibold">
-//				About
-//			</Link>
-//			<WorkButton/>		
-//			<Link href={"/contact"} className="text-lg font-semibold">
-//				Contact
-//			</Link>
-//			<ThemeToggle/>
-//		</div>
+{/*<NavigationMenu>
+<NavigationMenuList>
+	<NavigationMenuItem>
+		<NavigationMenuTrigger  className="text-lg">Work</NavigationMenuTrigger>
+			<NavigationMenuContent onClick={openHandler} className="-left-10" >
+				{open && <ProjectsNavBar previews={previews} /> }	
+			</NavigationMenuContent>
+	</NavigationMenuItem>
+</NavigationMenuList>
+</NavigationMenu>*/}

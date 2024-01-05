@@ -1,4 +1,4 @@
-import { ThemeProvider } from './components/ThemeProvider'
+//import { ThemeProvider } from './components/ThemeProvider'
 import { RouteObject } from 'react-router-dom'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 //import Error from './pages/Error'
@@ -17,7 +17,11 @@ const routerArray = [
   { 
     path: '/',
     element: <Root/>,
-    //errorElement: <Error/>,
+		loader: async () => {
+				const data = await getPreviews();
+				const onlyPreviews : Preview[] = data.map((obj : {preview: Preview}) => obj.preview)
+				return onlyPreviews
+		},
     children: [
       {
         index: true,
@@ -58,9 +62,12 @@ const router = createBrowserRouter(routerArray as RouteObject[])
 
   
 export default function App() {
-  return <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme"><RouterProvider 
-    router={router} 
-    fallbackElement={<div></div>}
-  />
-	</ThemeProvider>
+  return (
+		//<ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+			<RouterProvider 
+				router={router} 
+				fallbackElement={<div></div>}
+			/>
+		//</ThemeProvider>
+	)
 }

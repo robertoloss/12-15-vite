@@ -2,14 +2,16 @@ import { useState, useEffect } from "react";
 import NavBar from "./NavBar";
 import { RxHamburgerMenu } from "react-icons/rx";
 import NavDrawer from "./NavDrawer";
-import { getPreviews } from "@/sanity/client";
 import { Preview } from "@/sanity/sanity-types";
 import { Link } from "react-router-dom";
 
-export default function HeaderBar() {
+type Props = {
+	previews: Preview[]
+}
+
+export default function HeaderBar({ previews } : Props) {
 	const [shadow, setShadow] = useState<boolean>(false)
 	const [navDrawer, setNavDrawer] = useState<boolean>(false)
-	const [previews, setPreviews] = useState<Preview[] | null>(null)
 
 	useEffect(()=>{
     const scroll = () => {
@@ -24,15 +26,6 @@ export default function HeaderBar() {
 		setNavDrawer(prev => !prev)
 	}
 
-	useEffect(() => {
-    (async () => {
-        const data = await getPreviews();
-				const onlyPreviews : Preview[] = data.map((obj : {preview: Preview}) => obj.preview)
-        setPreviews(onlyPreviews);
-    })();
-  }, [setPreviews]);
-
-	
 	return (
 		<div className="top-0 sticky z-50 flex flex-col items-center h-20 w-full bg-background"
 			style={{
@@ -46,7 +39,9 @@ export default function HeaderBar() {
 				>
 					Amy Jackson
 				</Link>
-				<div className="hidden md:block"><NavBar previews={previews!}/></div>
+				<div className="hidden md:block">
+					<NavBar previews={previews!}/>
+				</div>
 				<div className="block md:hidden" onClick={hamMenuHandler}><RxHamburgerMenu size='32px'/></div>
 				{navDrawer && <NavDrawer previews={previews!} hamMenuHandler={hamMenuHandler}/> }
 			</div>

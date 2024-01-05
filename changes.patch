@@ -1,0 +1,708 @@
+diff --git a/src/App.tsx b/src/App.tsx
+index 96c6f01..a7bb00c 100644
+--- a/src/App.tsx
++++ b/src/App.tsx
+@@ -1,4 +1,4 @@
+-import { ThemeProvider } from './components/ThemeProvider'
++//import { ThemeProvider } from './components/ThemeProvider'
+ import { RouteObject } from 'react-router-dom'
+ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+ //import Error from './pages/Error'
+@@ -17,7 +17,11 @@ const routerArray = [
+   { 
+     path: '/',
+     element: <Root/>,
+-    //errorElement: <Error/>,
++		loader: async () => {
++				const data = await getPreviews();
++				const onlyPreviews : Preview[] = data.map((obj : {preview: Preview}) => obj.preview)
++				return onlyPreviews
++		},
+     children: [
+       {
+         index: true,
+@@ -58,9 +62,12 @@ const router = createBrowserRouter(routerArray as RouteObject[])
+ 
+   
+ export default function App() {
+-  return <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme"><RouterProvider 
+-    router={router} 
+-    fallbackElement={<div></div>}
+-  />
+-	</ThemeProvider>
++  return (
++		//<ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
++			<RouterProvider 
++				router={router} 
++				fallbackElement={<div></div>}
++			/>
++		//</ThemeProvider>
++	)
+ }
+diff --git a/src/components/BigPicture.tsx b/src/components/BigPicture.tsx
+index 183161f..83cd2fd 100644
+--- a/src/components/BigPicture.tsx
++++ b/src/components/BigPicture.tsx
+@@ -1,25 +1,17 @@
+ import useMediaQuery from "@/utils/useMediaQuery"
+ import { urlFor } from "@/sanity/client"
+ import { Project } from "@/sanity/sanity-types"
+-import { useState, useEffect } from "react"
+-import { useLocation } from "react-router-dom"
+-import { getProject } from "@/sanity/client"
++import { useState } from "react"
+ 
++type Props = {
++	project: Project
++}
+ 
+-export default function BigPicture() {
+-	const [project,	setProject] = useState<Project | null>(null)
+-	const [ , setLoaded] = useState(false)
+-	
+-	const location = useLocation();
+-	const projectSlug = location.pathname.split('/').pop()
+-	
+-	useEffect(()=>{
+-		(async ()=>{
+-			const data = await getProject(projectSlug!)
+-			setProject(data[0]) 
+-			setLoaded(true)
+-		})()	
+-	},[projectSlug])
++export default function BigPicture({ project } : Props) {
++		const [loading, setLoading] = useState(true);
++	function handleLoading() {
++		setLoading(false);
++	}
+ 
+ 	const screen = useMediaQuery()
+ 	const imgUrl = project ? 
+@@ -27,13 +19,25 @@ export default function BigPicture() {
+ 										urlFor(project.wide_picture.image)?.width(2400)?.url() 
+ 										: "" 
+ 									: "" 
+-
++	const lqipUrl = project ? 
++									project.wide_picture ? 
++										urlFor(project.wide_picture.image)?.width(200)?.url() 
++										: "" 
++									: ""
+ 	return (<>
+ 		<div 
+ 			className="flex flex-col w-[calc(100%+64px)] bg-bigpic h-fit py-10 px-4 mx-[-16px] items-center justify-center"
+ 			style={{ minHeight: `${screen / 2.3}px` }}> 
+ 				<div className="relative flex flex-col w-full max-w-[1096px] items-center"> 
+-					<img src={imgUrl} alt="picture" className="w-full"/>	
++					<img
++						src={imgUrl}
++						alt="picture"
++						className={`w-full ${loading ? 'h-0' : ''}`}
++						onLoad={handleLoading}
++					/>	
++					{// loading && <div className="w-full h-[800px] animate-pulse rounded-xl bg-gray-200"/>
++					}
++					{loading && <img src={lqipUrl} alt="picture" className={`w-full `} />}
+ 				</div>
+ 		</div>
+ 	</>)
+diff --git a/src/components/HeaderBar.tsx b/src/components/HeaderBar.tsx
+index ddc2d53..47aa5ba 100644
+--- a/src/components/HeaderBar.tsx
++++ b/src/components/HeaderBar.tsx
+@@ -2,14 +2,16 @@ import { useState, useEffect } from "react";
+ import NavBar from "./NavBar";
+ import { RxHamburgerMenu } from "react-icons/rx";
+ import NavDrawer from "./NavDrawer";
+-import { getPreviews } from "@/sanity/client";
+ import { Preview } from "@/sanity/sanity-types";
+ import { Link } from "react-router-dom";
+ 
+-export default function HeaderBar() {
++type Props = {
++	previews: Preview[]
++}
++
++export default function HeaderBar({ previews } : Props) {
+ 	const [shadow, setShadow] = useState<boolean>(false)
+ 	const [navDrawer, setNavDrawer] = useState<boolean>(false)
+-	const [previews, setPreviews] = useState<Preview[] | null>(null)
+ 
+ 	useEffect(()=>{
+     const scroll = () => {
+@@ -24,15 +26,6 @@ export default function HeaderBar() {
+ 		setNavDrawer(prev => !prev)
+ 	}
+ 
+-	useEffect(() => {
+-    (async () => {
+-        const data = await getPreviews();
+-				const onlyPreviews : Preview[] = data.map((obj : {preview: Preview}) => obj.preview)
+-        setPreviews(onlyPreviews);
+-    })();
+-  }, [setPreviews]);
+-
+-	
+ 	return (
+ 		<div className="top-0 sticky z-50 flex flex-col items-center h-20 w-full bg-background"
+ 			style={{
+@@ -46,7 +39,9 @@ export default function HeaderBar() {
+ 				>
+ 					Amy Jackson
+ 				</Link>
+-				<div className="hidden md:block"><NavBar previews={previews!}/></div>
++				<div className="hidden md:block">
++					<NavBar previews={previews!}/>
++				</div>
+ 				<div className="block md:hidden" onClick={hamMenuHandler}><RxHamburgerMenu size='32px'/></div>
+ 				{navDrawer && <NavDrawer previews={previews!} hamMenuHandler={hamMenuHandler}/> }
+ 			</div>
+diff --git a/src/components/Hero.tsx b/src/components/Hero.tsx
+index 6d9bcce..a9781d9 100644
+--- a/src/components/Hero.tsx
++++ b/src/components/Hero.tsx
+@@ -27,7 +27,7 @@ export default function Hero({ website } : Props) {
+ 	//},[setWebsite])
+ 	
+ 	return (
+-		<div className="w-full min-h-[200px] flex flex-col justify-center items-center px-8 sm:px-0 pt-20 md:pt-40 pb-20">
++		<div className="w-full min-h-[200px] flex flex-col justify-center items-center px-8 sm:px-0 pt-20 md:pt-20 pb-20">
+ 			<div className="flex flex-col max-w-[780px] w-full justify-center items-center gap-y-4 "> 
+ 				<h1 className="w-fit text-2xl font-raleway font-light text-destructive">{website?.name}</h1>
+ 				<h1 className="text-[32px] text-center">{website?.title}</h1>
+diff --git a/src/components/NavBar.tsx b/src/components/NavBar.tsx
+index cccd28f..7cda667 100644
+--- a/src/components/NavBar.tsx
++++ b/src/components/NavBar.tsx
+@@ -1,90 +1,80 @@
+ import ProjectsNavBar from "./ProjectsNavBar";
+-//import ThemeToggle from "./ThemeToggle";
+-import {
+-  NavigationMenu,
+-  NavigationMenuContent,
+-  NavigationMenuItem,
+-  //NavigationMenuLink,
+-  NavigationMenuList,
+-  NavigationMenuTrigger,
+-} from '../components/ui/navigation-menu.tsx'
+-//import { ThemeToggle } from "./ThemeToggle.tsx";
++import { useRef } from "react";
+ import { Preview } from "@/sanity/sanity-types.ts";
+ import { useState } from "react";
+ import { Link } from "react-router-dom"
+ 
+-
+ type Prop = {
+ 	previews: Preview[]
+ }
+ 
+ export default function NavBar({ previews } : Prop) {
+-	const [open, setOpen] = useState<boolean | undefined>(true);
+-	function openHandler() {
+-		setOpen(false);
+-		setTimeout(()=>{
++	const [open, setOpen] = useState<boolean>(false);
++	const [forceClose, setForceClose] = useState(false)
++	const again = useRef(false);
++	
++	function openHandler(status : "open" | "close") {
++		if (status === "open") {
+ 			setOpen(true)
+-		},500)
++			again.current = true
++		} else {
++			again.current = false 
++			setTimeout(()=>{
++				if (again.current === false) setOpen(false)
++			}, 300)
++		}
++	}
++	function openCurry(status: "open" | "close") {
++		return function handler() {
++			openHandler(status)
++		}
+ 	}
+ 
+-	return (<div className="flex flex-row bg-background space-x-8 w-fit items-center">
+-		<NavigationMenu>
+-			<NavigationMenuList>
+-
+-				<NavigationMenuItem>
+-					<NavigationMenuTrigger className="text-lg">About</NavigationMenuTrigger>
+-					<NavigationMenuContent onClick={openHandler}>
+-						{open && <div className="w-[320px] p-4" >
+-							<Link to={'/about'}  className="self-start w-fit text-2xl mt-10 font-normal">
+-								<div className="w-full p-2 text-xl hover:bg-gray-100">
+-									About
+-								</div>
+-							</Link>
+-						</div>}
+-					</NavigationMenuContent>
+-				</NavigationMenuItem>
+-
+-				<NavigationMenuItem>
+-					<NavigationMenuTrigger  className="text-lg">Work</NavigationMenuTrigger>
+-					<NavigationMenuContent onClick={openHandler}  >
+-						{open && <ProjectsNavBar previews={previews} /> }	
+-					</NavigationMenuContent>
+-				</NavigationMenuItem>
+-
+-				<NavigationMenuItem>
+-					<NavigationMenuTrigger className="text-lg">Contact</NavigationMenuTrigger>
+-					<NavigationMenuContent onClick={openHandler}>
+-						{open && <div className="w-[320px] p-4" >
+-							<Link to={'/contact'}  className="self-start w-fit text-2xl mt-10 font-normal">
+-								<div className="w-full p-2 text-xl hover:bg-gray-100">
+-									Contact
+-								</div>
+-							</Link>
+-						</div>}
+-					</NavigationMenuContent>
+-				</NavigationMenuItem>
+-
+-
+-			</NavigationMenuList>
+-		</NavigationMenu>
+-		{/* <ThemeToggle/> */}
+-	</div>)
++	return (
++		<div className="flex flex-row bg-background space-x-8 w-fit text-lg font-medium items-center">
++			<Link to={'/about'}  className="w-fit">
++				<div className="w-fit hover:text-destructive">
++					About
++				</div>
++			</Link>
++			<div className="flex flex-col ">
++				<div 
++					className={`w-fit cursor-pointer z-10 hover:text-destructive`}
++					onMouseEnter={openCurry("open")}
++					onMouseLeave={openCurry(("close"))}
++				>
++					Work
++				</div >
++					{!forceClose && 
++					<div className={`absolute top-[60px] shadow-xl right-[54px] opacity-0 transition-{opacity}
++						 w-fit overflow-hidden bg-white rounded-lg 
++						${open ? 'h-fit p-4 opacity-100 border-2 border-gray-200':'h-0'}`}>
++						<ProjectsNavBar 
++							previews={previews}
++							openCurry={openCurry}
++							open={open}
++							setForceClose={setForceClose}
++							forceClose={forceClose}
++						/>
++					</div>}
++			</div>
++			<Link to={'/contact'}  className="w-fit ">
++				<div className="w-fit hover:text-destructive">
++					Contact
++				</div>
++			</Link>
++			{/* <ThemeToggle/> */}
++		</div>
++	)
+ }
+ 
+-
+-
+-
+-
+-
+-//<div
+-//			className="flex flex-row bg-background space-x-8 items-center"
+-//		>
+-//			<Link href={"/about"} className="text-lg font-semibold">
+-//				About
+-//			</Link>
+-//			<WorkButton/>		
+-//			<Link href={"/contact"} className="text-lg font-semibold">
+-//				Contact
+-//			</Link>
+-//			<ThemeToggle/>
+-//		</div>
++{/*<NavigationMenu>
++<NavigationMenuList>
++	<NavigationMenuItem>
++		<NavigationMenuTrigger  className="text-lg">Work</NavigationMenuTrigger>
++			<NavigationMenuContent onClick={openHandler} className="-left-10" >
++				{open && <ProjectsNavBar previews={previews} /> }	
++			</NavigationMenuContent>
++	</NavigationMenuItem>
++</NavigationMenuList>
++</NavigationMenu>*/}
+diff --git a/src/components/NavDrawer.tsx b/src/components/NavDrawer.tsx
+index 0a72214..b82f12e 100644
+--- a/src/components/NavDrawer.tsx
++++ b/src/components/NavDrawer.tsx
+@@ -28,7 +28,7 @@ export default function NavDrawer({ hamMenuHandler, previews } : Props) {
+ 					</div>
+ 				</div>
+ 				<div className="flex flex-col items-center w-full ">
+-					<h1 className="self-start text-2xl font-normal w-full"
++					<h1 className={`self-start text-2xl font-normal w-full `}
+ 						onClick={showHandler}
+ 					>
+ 						Work
+@@ -40,8 +40,8 @@ export default function NavDrawer({ hamMenuHandler, previews } : Props) {
+ 							transition: 'grid-template-rows 0.3s ease-out', 
+ 						}}
+ 					>
+-						<div className="overflow-hidden">
+-							<ProjectsNavBar hamMenuHandler={hamMenuHandler} previews={previews} />
++						<div className="overflow-hidden" >
++							<ProjectsNavBar hamMenuHandler={hamMenuHandler} previews={previews} open={true} navBar={true}/>
+ 						</div>	
+ 					</div>
+ 					<Link to={'/about'} onClick={hamMenuHandler} className="self-start w-full text-2xl mt-10 font-normal">
+diff --git a/src/components/PreviewCard.tsx b/src/components/PreviewCard.tsx
+index cd9606b..9f8face 100644
+--- a/src/components/PreviewCard.tsx
++++ b/src/components/PreviewCard.tsx
+@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
+ import { Preview } from "@/sanity/sanity-types";
+ import { urlFor } from "@/sanity/client";
+ import { IoIosArrowRoundForward } from "react-icons/io";
++import { useState } from "react";
+ 
+ type Props = {
+ 	preview: Preview 
+@@ -20,16 +21,34 @@ const components : PortableTextComponents = {
+ 
+ 
+ export default function PreviewCard({ preview } : Props) {
++	const [loading, setLoading] = useState(true)
++
++	function loadingHandler() {
++		setLoading(false)
++	}
++	
+ 	
+ 	const imgUrl = preview.picture ? urlFor(preview.picture?.image)?.width(2400)?.url() : "" 
+-
++	const lqipUrl = preview.picture ? urlFor(preview.picture?.image)?.width(24)?.url() : "" 
++	
+ 	return (
+ 		<Link to={`/projects/${preview.slug}`}>
+ 			<div className="flex flex-col md:flex-row relative p-6 border-y-2 sm:border-2 sm:rounded-lg w-full 
+-				sm:max-w-[960px]  min-h-[360px] bg-muted gap-x-[80px] gap-y-4 hover:shadow-gray-500 hover:shadow-sm">
++				sm:max-w-[960px]  min-h-[360px] bg-muted gap-x-[80px] gap-y-4 hover:shadow-gray-500 hover:shadow-lg transition-all">
+ 				<div className={`relative flex flex-col  ${!preview ? "bg-gray-100 animate-fast-pulse" : ""}
+ 					justify-center items-center w-full h-fit md:h-auto `}>
+-					{preview.picture && <img src={imgUrl} alt="picture" className=""/>}
++					<img 
++						src={imgUrl}
++						onLoad={loadingHandler}
++						alt="picture"
++						className={`w-full ${loading ? 'h-0' :''}`}
++					/>
++					{loading && 
++					<img 
++						src={lqipUrl}
++						alt="picture"
++						className={`w-full`}
++					/>}
+ 				</div>
+ 				<div className="flex flex-col w-full justify-center ">
+ 					<div className="flex flex-col h-fit leading-none gap-y-2">
+diff --git a/src/components/ProjectsNavBar.tsx b/src/components/ProjectsNavBar.tsx
+index ffd2ce9..effa3b6 100644
+--- a/src/components/ProjectsNavBar.tsx
++++ b/src/components/ProjectsNavBar.tsx
+@@ -3,6 +3,7 @@ import { PortableTextComponents, PortableText } from "@portabletext/react"
+ import { Link } from "react-router-dom"
+ import { Preview } from "@/sanity/sanity-types"
+ import { urlFor } from "@/sanity/client"
++import { useState } from "react"
+ 
+ const components : PortableTextComponents = {
+   block: {
+@@ -15,32 +16,67 @@ const components : PortableTextComponents = {
+ type Prop = {
+ 	previews: Preview[]
+ 	hamMenuHandler?: ()=>void
++	openCurry?: (s: "open" | "close")=>()=>void
++	open?: boolean
++	navBar?: boolean
++	setForceClose?: (b:boolean)=>void
++	forceClose?: boolean
+ }
+ 
+-export default function ProjectsNavBar({ previews, hamMenuHandler } : Prop) {
+-
++export default function ProjectsNavBar({ previews, hamMenuHandler, openCurry,   navBar, setForceClose, forceClose} : Prop) {
++	const [loading, setLoading] = useState(true)
++	
++	function loaderHandler() {
++		setLoading(false)
++	}
++	function clickHandler() {
++		hamMenuHandler && hamMenuHandler()
++		if (openCurry && setForceClose) {
++			setForceClose(true)
++			openCurry("close")()
++			setTimeout(()=>setForceClose(false), 1000)
++		}
++	}
++	
+ 	return (
+-		<div className="flex flex-col w-[320px] p-4 gap-y-2 text-[#3D4048]" >
++		<>{!forceClose && 
++		<div 
++			className={`flex z-20 flex-col w-[288px] gap-y-2  text-[#3D4048]
++				     ${navBar ? 'mt-8' : ''}`}
++			onMouseEnter={openCurry ? openCurry("open") : ()=>{}}
++			onMouseLeave={openCurry ? openCurry("close") : ()=>{}}
++		>
+ 			{previews?.map(( preview, key : number ) => { 
+ 				return (
+-					<div className="w-full" key={key}>
+-						<Link onClick={hamMenuHandler} to={`/projects/${preview.slug}`}>
+-								<div className="flex flex-col w-full h-20 hover:bg-accent p-0 ">
+-									<div className="flex flex-row h-full justify-start gap-x-4 items-center">
+-										<div className={`relative flex flex-col w-[200px] bg-gray-100 
+-											${!preview ? "animate-fast-pulse" : ""} h-full justify-center`}>
+-											{preview.picture && <img src={urlFor(preview.picture.image)?.width(200).url()} alt="picture"/>}
+-										</div>
+-										<div className="flex flex-col h-full w-full overflow-hidden text-ellipsis items-start justify-center">
+-											<h1 className="w-full font-bold"> {preview.navBarTitle} </h1>
+-												<PortableText components={components} value={preview.navBarDescription}/>
+-										</div>
++					<div className="w-full group" key={key} >
++						<Link onClick={clickHandler} to={`/projects/${preview.slug}`}>
++							<div className="flex flex-col w-full h-20  p-0 ">
++								<div className="flex flex-row h-full justify-start gap-x-4 items-center">
++									<div className={`relative flex flex-col w-[200px] h-full justify-center`}>
++										<img 
++											src={urlFor(preview.picture?.image)?.width(200).url()}
++											alt="picture"
++											className={`w-full ${loading ? 'h-0' :''}`}
++											onLoad={loaderHandler}
++										/>
++										{loading && 
++											<img 
++												src={urlFor(preview.picture?.image)?.width(20).url()}
++												alt="picture"
++												className={`w-full`}
++											/>}
++									</div>
++									<div className="flex flex-col h-full w-full overflow-hidden
++										text-ellipsis items-start justify-center">
++										<h1 className="w-full font-medium group-hover:text-destructive"> {preview.navBarTitle} </h1>
++											<PortableText components={components} value={preview.navBarDescription}/>
+ 									</div>
+ 								</div>
++							</div>
+ 						</Link>
+ 					</div>
+ 				)
+ 			})}
+-		</div>
++		</div>}</>
+ 	)
+ }
+diff --git a/src/pages/About.tsx b/src/pages/About.tsx
+index 36bb5e3..4797266 100644
+--- a/src/pages/About.tsx
++++ b/src/pages/About.tsx
+@@ -1,6 +1,5 @@
+-//import { getWebsiteInfo } from "@/sanity/client"
+ import { urlFor } from "@/sanity/client"
+-//import { useState, useEffect } from "react"
++import { useState } from "react"
+ import { Website } from "@/sanity/sanity-types"
+ import { PortableTextComponents, PortableText } from "@portabletext/react"
+ import { useLoaderData } from "react-router-dom"
+@@ -23,15 +22,16 @@ const componentsExpertise : PortableTextComponents = {
+ }
+ 
+ export default function About() {
+-	//const [website, setWebsite] = useState<Website | null>(null)
++	const [loading, setLoading] = useState(true)
++	const [loading2, setLoading2] = useState(true)
++
++	function loadingHandler() {
++		setLoading(false)
++	}
++	function loadingHandler2() {
++		setLoading2(false)
++	}
+ 
+-	//useEffect(()=>{
+-	//	(async () => {
+-	//		const data = await getWebsiteInfo()
+-	//		setWebsite(data[0])
+-	//	})()
+-	//},[setWebsite])
+-	
+ 	const website = useLoaderData() as Website
+ 
+ 	return (<div className="flex flex-col min-h-[100vh] mb-[200px]">
+@@ -62,8 +62,26 @@ export default function About() {
+ 				</div>
+ 			</div>
+ 			<div className="relative flex flex-col w-full max-w-[1096px] self-center mt-[40px] mb-[160px]"> 
+-				<img src={urlFor(website.about_picture?.image)?.width(2400)?.url()} alt="img"/>
+-				<h1 className="self-center text-white -mt-[200px] max-w-[400px] text-center px-6">
++				<img 
++					className={`${loading ? 'h-0' : ''}`}
++					src={urlFor(website.about_picture?.image)?.width(2400)?.url()}
++					alt="img"
++					onLoad={loadingHandler}
++				/>
++				{loading && 
++				<img
++					className={`w-full ${loading2 ? 'h-0' : ''}`}
++					src={urlFor(website.about_picture?.image)?.width(200)?.url()}
++					alt="img"
++					onLoad={loadingHandler2}
++				/>}
++				{loading2 && 
++				<img className="w-full"
++					src={urlFor(website.about_picture?.image)?.width(24)?.url()}
++					alt="img"
++				/>}
++				<h1 className={`sm:text-lg sm:font-medium self-center text-white -mt-[100px] sm:-mt-[200px] max-w-[400px] 
++					text-center px-6 ${(loading || loading2) ? 'opacity-0' : ''}`}>
+ 					{website.about_picture?.name}
+ 				</h1>
+ 			</div>
+diff --git a/src/pages/Contact.tsx b/src/pages/Contact.tsx
+index e966b7e..c01bf15 100644
+--- a/src/pages/Contact.tsx
++++ b/src/pages/Contact.tsx
+@@ -20,10 +20,10 @@ export default function Contact() {
+ 											process.env.EMAILJS_TEMPLATE_ID!, 
+ 											form.current!, 
+ 											process.env.EMAILJS_PUBLIC_KEY!)
+-      .then((result) => {
+-          console.log(result.text);
+-      }, (error) => {
+-          console.log(error.text);
++		.then((result) => {
++				console.log(result.text);
++		}, (error) => {
++				console.log(error.text);
+ 		});
+ 		setSubmitted(true)
+   };
+@@ -41,8 +41,8 @@ export default function Contact() {
+ 	}
+ 
+ 	function labelClassName(input: "name" | "email" | "message") : string {
+-		const common = ' flex absolute top-[10px] z-10 ml-2 font-normal transition-all ease-out duration-200 '
+-		const onFocus = ' top-[4px] text-blue-600 text-xs ' 
++		const common = ' flex absolute top-[10px] z-10 ml-2 font-normal transition-all ease-out duration-100 '
++		const onFocus = ' top-[4px] left-[2px] text-[#565a66] text-xs ' 
+ 		const onBlur = ' text-gray-500'
+ 		const specific = {
+ 			name: nameFocus || nameInputRef.current?.value  ? onFocus : onBlur, 
+@@ -53,9 +53,9 @@ export default function Contact() {
+ 	}
+ 
+ 	function inputClassName(input: "nameOrEmail" | "message") : string {
+-		const common = 'flex px-2 pt-4'
++		const common = 'flex px-2 pt-4 rounded-sm border-2 border-white focus:outline-none focus:ring-0 focus:border-[#565a66]  focus:border-2'
+ 		const specific = {
+-			nameOrEmail: ' h-11 ',
++			nameOrEmail: ' h-11',
+ 			message:  ' h-20 ',
+ 		}
+ 		return specific[input] + common
+@@ -123,14 +123,16 @@ export default function Contact() {
+ 							/>
+ 						</div>
+ 
+-						{/*<label>Message</label>
+-							<textarea name="message" className='flex'/>*/}
+ 
+-						{!capVal && <ReCAPTCHA 
+-							sitekey={process.env.CAPTCHA_SITE_KEY!}
+-							onChange={(v)=>setCapVal(v)}
+-							className='flex self-center mt-10'
+-						/>}
++						{!capVal && 
++						<>
++							<ReCAPTCHA 
++								sitekey={process.env.CAPTCHA_SITE_KEY!}
++								onChange={(v)=>setCapVal(v)}
++								className='flex z-20 self-center'
++							/>
++							</>
++						}
+ 						{(capVal && !submitted) && <input 
+ 							type="submit" 
+ 							value="Send" 
+diff --git a/src/pages/Project.tsx b/src/pages/Project.tsx
+index 9e13d22..757bc03 100644
+--- a/src/pages/Project.tsx
++++ b/src/pages/Project.tsx
+@@ -4,42 +4,26 @@ import { SectionType } from "@/sanity/sanity-types";
+ import ThreeColumns from "@/components/ThreeColumns";
+ import HeroProject from "@/components/HeroProject";
+ import BigPicture from "@/components/BigPicture";
+-//import { useLocation } from "react-router-dom";
+-//import { useEffect, useState } from "react";
+-//import { getProject } from "@/sanity/client";
+ import { createColumns } from "@/utils/create-columns";
+ import { useLoaderData } from "react-router-dom";
+  
+ export default function ProjectPage() {
+-	//const [project,	setProject] = useState<Project | null>(null)
+-	//const [loaded, setLoaded] = useState(false)
+-	
+-	//const location = useLocation();
+-	//const projectSlug = location.pathname.split('/').pop()
+-	
+-	//useEffect(()=>{
+-	//	(async ()=>{
+-	//		const data = await getProject(projectSlug!)
+-	//		setProject(data[0]) 
+-	//		setLoaded(true)
+-	//	})()	
+-	//},[projectSlug])
+-	
+ 	const projectArray : Project[] | null = useLoaderData() as Project[] | null
+ 	const project : Project | null = projectArray ? projectArray[0] : null
+ 	
+ 	const columns = project ? createColumns(project) : []	
+ 
++	window.scrollTo(0,0)
++
+ 	return (
+ 		<div className="flex flex-col items-center px-8 w-full min-h-[100vh]">
+ 			{ ( !project ) && <h1>Uh oh! Something went wrong... 🤔</h1> } {/* deleted loaded && */}
+ 
+ 			{ project && <HeroProject project={project} /> }
+-			{ (project && project.wide_picture) && <BigPicture /> }
++			{ (project && project.wide_picture) && <BigPicture project={project} /> }
+ 			{ project?.three_cols_yesNo && <ThreeColumns columns={columns} /> }
+ 			{ project?.sections?.map((section: SectionType, key: number) => 
+ 						<Section section={section} sectionNum={key} key={key}/>) }
+-
+ 		</div>
+ 	)
+ }
+diff --git a/src/pages/Root.tsx b/src/pages/Root.tsx
+index e677b66..91abdbd 100644
+--- a/src/pages/Root.tsx
++++ b/src/pages/Root.tsx
+@@ -1,15 +1,15 @@
+ import Footer from "@/components/Footer";
+ import HeaderBar from "@/components/HeaderBar";
++import { Preview } from "@/sanity/sanity-types";
+ import { Outlet } from "react-router-dom";
+-
+-
+-
++import { useLoaderData } from "react-router-dom";
+ 
+ export default function Root() {
++	const previews = useLoaderData() as Preview[]
+ 
+ 	return (
+ 		<>
+-			<HeaderBar/>
++			<HeaderBar previews={previews}/>
+ 			<Outlet/>
+ 			<Footer/>
+ 		</>

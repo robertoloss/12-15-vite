@@ -20,10 +20,10 @@ export default function Contact() {
 											process.env.EMAILJS_TEMPLATE_ID!, 
 											form.current!, 
 											process.env.EMAILJS_PUBLIC_KEY!)
-      .then((result) => {
-          console.log(result.text);
-      }, (error) => {
-          console.log(error.text);
+		.then((result) => {
+				console.log(result.text);
+		}, (error) => {
+				console.log(error.text);
 		});
 		setSubmitted(true)
   };
@@ -41,8 +41,8 @@ export default function Contact() {
 	}
 
 	function labelClassName(input: "name" | "email" | "message") : string {
-		const common = ' flex absolute top-[10px] z-10 ml-2 font-normal transition-all ease-out duration-200 '
-		const onFocus = ' top-[4px] text-blue-600 text-xs ' 
+		const common = ' flex absolute top-[10px] z-10 ml-2 font-normal transition-all ease-out duration-100 '
+		const onFocus = ' top-[4px] left-[2px] text-[#565a66] text-xs ' 
 		const onBlur = ' text-gray-500'
 		const specific = {
 			name: nameFocus || nameInputRef.current?.value  ? onFocus : onBlur, 
@@ -53,9 +53,9 @@ export default function Contact() {
 	}
 
 	function inputClassName(input: "nameOrEmail" | "message") : string {
-		const common = 'flex px-2 pt-4'
+		const common = 'flex px-2 pt-4 rounded-sm border-2 border-white focus:outline-none focus:ring-0 focus:border-[#565a66]  focus:border-2'
 		const specific = {
-			nameOrEmail: ' h-11 ',
+			nameOrEmail: ' h-11',
 			message:  ' h-20 ',
 		}
 		return specific[input] + common
@@ -123,14 +123,16 @@ export default function Contact() {
 							/>
 						</div>
 
-						{/*<label>Message</label>
-							<textarea name="message" className='flex'/>*/}
 
-						{!capVal && <ReCAPTCHA 
-							sitekey={process.env.CAPTCHA_SITE_KEY!}
-							onChange={(v)=>setCapVal(v)}
-							className='flex self-center mt-10'
-						/>}
+						{!capVal && 
+						<>
+							<ReCAPTCHA 
+								sitekey={process.env.CAPTCHA_SITE_KEY!}
+								onChange={(v)=>setCapVal(v)}
+								className='flex z-20 self-center'
+							/>
+							</>
+						}
 						{(capVal && !submitted) && <input 
 							type="submit" 
 							value="Send" 

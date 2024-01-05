@@ -28,7 +28,7 @@ export default function NavDrawer({ hamMenuHandler, previews } : Props) {
 					</div>
 				</div>
 				<div className="flex flex-col items-center w-full ">
-					<h1 className="self-start text-2xl font-normal w-full"
+					<h1 className={`self-start text-2xl font-normal w-full `}
 						onClick={showHandler}
 					>
 						Work
@@ -40,8 +40,8 @@ export default function NavDrawer({ hamMenuHandler, previews } : Props) {
 							transition: 'grid-template-rows 0.3s ease-out', 
 						}}
 					>
-						<div className="overflow-hidden">
-							<ProjectsNavBar hamMenuHandler={hamMenuHandler} previews={previews} />
+						<div className="overflow-hidden" >
+							<ProjectsNavBar hamMenuHandler={hamMenuHandler} previews={previews} open={true} navBar={true}/>
 						</div>	
 					</div>
 					<Link to={'/about'} onClick={hamMenuHandler} className="self-start w-full text-2xl mt-10 font-normal">

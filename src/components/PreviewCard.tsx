@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Preview } from "@/sanity/sanity-types";
 import { urlFor } from "@/sanity/client";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import { useState } from "react";
 
 type Props = {
 	preview: Preview 
@@ -20,16 +21,34 @@ const components : PortableTextComponents = {
 
 
 export default function PreviewCard({ preview } : Props) {
+	const [loading, setLoading] = useState(true)
+
+	function loadingHandler() {
+		setLoading(false)
+	}
+	
 	
 	const imgUrl = preview.picture ? urlFor(preview.picture?.image)?.width(2400)?.url() : "" 
-
+	const lqipUrl = preview.picture ? urlFor(preview.picture?.image)?.width(24)?.url() : "" 
+	
 	return (
 		<Link to={`/projects/${preview.slug}`}>
 			<div className="flex flex-col md:flex-row relative p-6 border-y-2 sm:border-2 sm:rounded-lg w-full 
-				sm:max-w-[960px]  min-h-[360px] bg-muted gap-x-[80px] gap-y-4 hover:shadow-gray-500 hover:shadow-sm">
+				sm:max-w-[960px]  min-h-[360px] bg-muted gap-x-[80px] gap-y-4 hover:shadow-gray-500 hover:shadow-lg transition-all">
 				<div className={`relative flex flex-col  ${!preview ? "bg-gray-100 animate-fast-pulse" : ""}
 					justify-center items-center w-full h-fit md:h-auto `}>
-					{preview.picture && <img src={imgUrl} alt="picture" className=""/>}
+					<img 
+						src={imgUrl}
+						onLoad={loadingHandler}
+						alt="picture"
+						className={`w-full ${loading ? 'h-0' :''}`}
+					/>
+					{loading && 
+					<img 
+						src={lqipUrl}
+						alt="picture"
+						className={`w-full`}
+					/>}
 				</div>
 				<div className="flex flex-col w-full justify-center ">
 					<div className="flex flex-col h-fit leading-none gap-y-2">
