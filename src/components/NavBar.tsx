@@ -21,7 +21,7 @@ export default function NavBar({ previews } : Prop) {
 			again.current = false 
 			setTimeout(()=>{
 				if (again.current === false) setOpen(false)
-			}, 300)
+			}, 200)
 		}
 	}
 	function openCurry(status: "open" | "close") {
@@ -32,12 +32,12 @@ export default function NavBar({ previews } : Prop) {
 
 	return (
 		<div className="flex flex-row bg-background space-x-8 w-fit text-lg font-medium items-center">
-			<Link to={'/about'}  className="w-fit">
+			<Link to={'/about'}  className="flex relative w-fit">
 				<div className="w-fit hover:text-destructive">
 					About
 				</div>
 			</Link>
-			<div className="flex flex-col ">
+			<div className="flex flex-col">
 				<div 
 					className={`w-fit cursor-pointer z-10 hover:text-destructive`}
 					onMouseEnter={openCurry("open")}
@@ -46,7 +46,7 @@ export default function NavBar({ previews } : Prop) {
 					Work
 				</div >
 					{!forceClose && 
-					<div className={`absolute top-[60px] shadow-xl right-[54px] opacity-0 transition-{opacity}
+					<div className={`absolute mt-[32px] -ml-[180px] shadow-xl opacity-0 transition-{opacity}
 						 w-fit overflow-hidden bg-white rounded-lg 
 						${open ? 'h-fit p-4 opacity-100 border-2 border-gray-200':'h-0'}`}>
 						<ProjectsNavBar 
