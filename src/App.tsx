@@ -1,6 +1,6 @@
 //import { ThemeProvider } from './components/ThemeProvider'
 import { RouteObject } from 'react-router-dom'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider} from 'react-router-dom'
 //import Error from './pages/Error'
 import Home from './pages/Home'
 import Root from './pages/Root'
@@ -58,10 +58,13 @@ const routerArray = [
     ]
   }
 ]
+
 const router = createBrowserRouter(routerArray as RouteObject[]) 
+
 
   
 export default function App() {
+
   return (
 		//<ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
 			<RouterProvider 

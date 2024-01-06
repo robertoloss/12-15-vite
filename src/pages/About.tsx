@@ -3,6 +3,7 @@ import { useState } from "react"
 import { Website } from "@/sanity/sanity-types"
 import { PortableTextComponents, PortableText } from "@portabletext/react"
 import { useLoaderData } from "react-router-dom"
+import AnimationWrapper from "@/components/AnimationWrapper"
 
 const components : PortableTextComponents = {
   block: {
@@ -34,7 +35,9 @@ export default function About() {
 
 	const website = useLoaderData() as Website
 
-	return (<div className="flex flex-col min-h-[100vh] mb-[200px]">
+	return (
+		<AnimationWrapper>
+		<div className="flex flex-col min-h-[100vh] mb-[200px]">
 		{website && <div className="flex flex-col px-6"> 
 			<div className="py-10 flex flex-col w-full items-center">
 				<div className="flex flex-col items-center gap-y-4 w-full max-w-[640px]">
@@ -86,6 +89,7 @@ export default function About() {
 				</h1>
 			</div>
 		</div>}
-	</div>)
+	</div>
+	</AnimationWrapper>)
 }
 	

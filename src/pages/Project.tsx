@@ -6,6 +6,7 @@ import HeroProject from "@/components/HeroProject";
 import BigPicture from "@/components/BigPicture";
 import { createColumns } from "@/utils/create-columns";
 import { useLoaderData } from "react-router-dom";
+import AnimationWrapper from "@/components/AnimationWrapper";
  
 export default function ProjectPage() {
 	const projectArray : Project[] | null = useLoaderData() as Project[] | null
@@ -16,14 +17,16 @@ export default function ProjectPage() {
 	window.scrollTo(0,0)
 
 	return (
-		<div className="flex flex-col items-center px-8 w-full min-h-[100vh]">
-			{ ( !project ) && <h1>Uh oh! Something went wrong... 🤔</h1> } {/* deleted loaded && */}
+		<AnimationWrapper>
+			<div className="flex flex-col items-center px-8 w-full min-h-[100vh]">
+				{ ( !project ) && <h1>Uh oh! Something went wrong... 🤔</h1> } {/* deleted loaded && */}
 
-			{ project && <HeroProject project={project} /> }
-			{ (project && project.wide_picture) && <BigPicture project={project} /> }
-			{ project?.three_cols_yesNo && <ThreeColumns columns={columns} /> }
-			{ project?.sections?.map((section: SectionType, key: number) => 
-						<Section section={section} sectionNum={key} key={key}/>) }
-		</div>
+				{ project && <HeroProject project={project} /> }
+				{ (project && project.wide_picture) && <BigPicture project={project} /> }
+				{ project?.three_cols_yesNo && <ThreeColumns columns={columns} /> }
+				{ project?.sections?.map((section: SectionType, key: number) => 
+							<Section section={section} sectionNum={key} key={key}/>) }
+			</div>
+		</AnimationWrapper>
 	)
 }
