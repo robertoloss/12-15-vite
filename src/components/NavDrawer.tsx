@@ -17,7 +17,7 @@ export default function NavDrawer({ hamMenuHandler, previews } : Props) {
 	}
  
 	return (
-		<div className="absolute top-0 left-0 w-screen h-screen p-4 ">
+		<div className="absolute top-0 left-0 w-screen bg-white h-screen p-4 ">
 			<div className="flex flex-col gap-y-10 w-full h-full">
 				<div className="flex flex-row h-fit w-full mt-1 justify-between items-center" onClick={hamMenuHandler}>
 					<Link to={'/'} className="w-fit text-2xl font-semibold">

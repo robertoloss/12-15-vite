@@ -41,7 +41,7 @@ export default function ProjectsNavBar({ previews, hamMenuHandler, openCurry,   
 	return (
 		<>{!forceClose && 
 		<div 
-			className={`flex z-20 flex-col w-[288px] gap-y-2  text-[#3D4048]
+			className={`bg-white flex z-20 flex-col w-[288px] gap-y-2  text-[#3D4048]
 				     ${navBar ? 'mt-8' : ''}`}
 			onMouseEnter={openCurry ? openCurry("open") : ()=>{}}
 			onMouseLeave={openCurry ? openCurry("close") : ()=>{}}
