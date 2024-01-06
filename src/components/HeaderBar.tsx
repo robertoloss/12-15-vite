@@ -27,7 +27,7 @@ export default function HeaderBar({ previews } : Props) {
 	}
 
 	return (
-		<div className="top-0 sticky z-50 flex flex-col items-center h-20 w-full bg-background"
+		<div className={`top-0 sticky z-50 flex flex-col items-center h-20 w-full ${shadow ? 'bg-white' : 'bg-background'}`}
 			style={{
 			boxShadow: `${shadow ? "0px 2px 2px rgb(130,130,130,0.2)" : ''}`,
 				transition: 'all 0.5s '

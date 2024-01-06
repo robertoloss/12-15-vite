@@ -31,7 +31,7 @@ export default function NavBar({ previews } : Prop) {
 	}
 
 	return (
-		<div className="flex flex-row bg-background space-x-8 w-fit text-lg font-medium items-center">
+		<div className="flex flex-row space-x-8 w-fit text-lg font-medium items-center">
 			<Link to={'/about'}  className="flex relative w-fit">
 				<div className="w-fit hover:text-destructive">
 					About
