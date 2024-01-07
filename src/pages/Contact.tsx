@@ -13,7 +13,7 @@ export default function Contact() {
 	const emailInputRef = useRef<HTMLInputElement>(null)
 	const messageInputRef = useRef<HTMLTextAreaElement>(null)
 	//const [capVal, setCapVal] = useState<string | null>(null)
-	//const [submitted, setSubmitted] = useState(false)
+	const [submitted, setSubmitted] = useState(false)
 	const [nameFocus, setNameFocus] = useState(false)
 	const [emailFocus, setEmailFocus] = useState(false)
 	const [messageFocus, setMessageFocus] = useState(false)
@@ -147,17 +147,20 @@ export default function Contact() {
 									className='flex z-20 self-center'
 								/>
 								</>
-							}
-							{(capVal && !submitted) && <input 
+							*/}
+							{!submitted &&
+									//(capVal && !submitted) && 
+							<input 
 								type="submit" 
 								value="Send" 
-								disabled={!capVal}
+								onSubmit={()=>setSubmitted(true)}
+								//disabled={!capVal}
 								className='
 									mt-10 py-1 px-2 bg-sky-600 hover:bg-sky-700 w-[80px] 
 									self-center rounded-full text-white cursor-pointer
 								'
 							/>}
-							{submitted && <h1 className='mt-10 py-1 px-2 self-center font-semibold'>Sent!</h1>}*/}
+							{submitted && <h1 className='mt-10 py-1 px-2 self-center font-semibold'>Sent!</h1>}
 						</form>
 					</div>
 			</div>

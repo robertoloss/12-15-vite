@@ -18,13 +18,10 @@ function Home() {
 		setPageOpen(true)
 	},[setPageOpen,location])
 
-	function clickHandler() {
-		setPageOpen(false)
-	}
-	
+		
 	return (<div className='min-h-screen'>
 		{pageOpen && <AnimationWrapper>
-			<div onClick={clickHandler} className="flex flex-col relative sm:px-8 pb-20 items-center min-h-[100vh]">
+			<div  className="flex flex-col relative sm:px-8 pb-20 items-center min-h-[100vh]">
 				<Hero website={ website } />
 				<div className="flex flex-col items-center gap-y-10 mb-[160px]">
 				{previews?.map(( preview: Preview, index: number ) =>
