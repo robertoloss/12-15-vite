@@ -20,7 +20,7 @@ function Home() {
 
 		
 	return (<div className='min-h-screen'>
-		{pageOpen && <AnimationWrapper>
+		<AnimationWrapper pageOpen={pageOpen}>
 			<div  className="flex flex-col relative sm:px-8 pb-20 items-center min-h-[100vh]">
 				<Hero website={ website } />
 				<div className="flex flex-col items-center gap-y-10 mb-[160px]">
@@ -29,7 +29,7 @@ function Home() {
 				)}
 				</div>
 			</div>
-		</AnimationWrapper>}
+		</AnimationWrapper>
 		</div>
 	)
 }

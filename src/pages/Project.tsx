@@ -24,7 +24,7 @@ export default function ProjectPage() {
 	window.scrollTo(0,0)
 	
 	return (<div className="min-h-screen">
-		{pageOpen && <AnimationWrapper>
+		<AnimationWrapper pageOpen={pageOpen}>
 			<div className="flex flex-col items-center px-8 w-full">
 				{ ( !project ) && <h1>Uh oh! Something went wrong... 🤔</h1> } {/* deleted loaded && */}
 
@@ -34,7 +34,7 @@ export default function ProjectPage() {
 				{ project?.sections?.map((section: SectionType, key: number) => 
 							<Section section={section} sectionNum={key} key={key}/>) }
 			</div>
-		</AnimationWrapper>}
+		</AnimationWrapper>
 		</div>
 	)
 }

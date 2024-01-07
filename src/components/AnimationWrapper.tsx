@@ -2,27 +2,28 @@ import { motion, AnimatePresence } from "framer-motion";
 
 type Props = {
 	children: React.ReactNode
-	isVisible?: boolean
+	pageOpen?: boolean
 }
 
-export default function AnimationWrapper({ children, isVisible } : Props) {
+export default function AnimationWrapper({ children, pageOpen } : Props) {
 
 	return (
 		<AnimatePresence>
-			{!isVisible && 
+			{pageOpen && 
 			<motion.div
 				key={location.pathname}
 				initial={{ 
 					opacity: 0, 
-					//x: 50 
+					x: 50 
 				}}
 				animate={{ 
 					opacity: 1, 
-					//x: 0, 
-					transition: {ease: 'easeOut', duration: .1} }}
+					x: 0, 
+					transition: {ease: 'easeOut', duration: .5} }}
 				exit={{ 
 					opacity: 0, 
-					//x: -50
+					transition: {ease: 'easeOut', duration: .2}, 
+					x: -50
 				}}
 			>
 				{children}

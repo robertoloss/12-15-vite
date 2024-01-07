@@ -46,8 +46,10 @@ export default function About() {
 
 	const website = useLoaderData() as Website
 
+	window.scrollTo(0,0)
+
 	return (<div className="min-h-screen">
-		{pageOpen && <AnimationWrapper>
+		<AnimationWrapper pageOpen={pageOpen}>
 		<div className="flex flex-col min-h-[100vh] mb-[200px]">
 		{website && <div className="flex flex-col px-6"> 
 			<div className="py-10 flex flex-col w-full items-center">
@@ -75,7 +77,7 @@ export default function About() {
 					<PortableText components={componentsExpertise} value={website.about_expertise!} />
 				</div>
 			</div>
-			<div className="relative flex flex-col w-full max-w-[1096px] self-center mt-[40px] mb-[160px]"> 
+			<div className="relative flex flex-col w-full max-w-[640px] self-center mt-[40px] mb-[160px]"> 
 				<img 
 					className={`${loading ? 'h-0' : ''}`}
 					src={urlFor(website.about_picture?.image)?.width(2400)?.url()}
@@ -101,7 +103,7 @@ export default function About() {
 			</div>
 		</div>}
 	</div>
-	</AnimationWrapper>}
+	</AnimationWrapper>
 	</div>)
 }
 	

@@ -16,7 +16,6 @@ export default function Contact() {
 	const [emailFocus, setEmailFocus] = useState(false)
 	const [messageFocus, setMessageFocus] = useState(false)
 	const [showReCaptcha, setShowReCaptcha] = useState(false)
-
 	const { pageOpen, setPageOpen } = usePage()
 	const location = useLocation()
 	
@@ -43,8 +42,6 @@ export default function Contact() {
   function buttonHandler() {
 		setShowReCaptcha(true)
 	}
-
-	
 
 	function nameLabelHandler() {
 		nameInputRef.current?.focus()
@@ -81,9 +78,10 @@ export default function Contact() {
 		return specific[input] + common
 	}
 
+	window.scrollTo(0,0)
 
   return (<div className='min-h-screen'>
-		{pageOpen && <AnimationWrapper>
+		<AnimationWrapper pageOpen={pageOpen}>
 			<div className='flex flex-col w-full items-center py-10 gap-y-10 
 				sm:py-14 px-6 sm:gap-y-10 min-h-[calc(100vh-290px)]'>
 				<h1 className='text-4xl font-bold'>
@@ -148,26 +146,31 @@ export default function Contact() {
 						<div className='h-12 flex flex-col items-center justify-center'>
 							{(showReCaptcha && !submitted) && <h1> Click on the reCAPTCHA to send the email </h1>}
 							{submitted && <h1 className='py-1 px-2  font-semibold'>Email Sent!</h1>}
-							{!showReCaptcha && <button
-								className='py-1 px-2 bg-sky-600 hover:bg-sky-700 w-[80px] h-fit 
-									self-center rounded-full text-white cursor-pointer'
-								onClick={buttonHandler}
-							>
-								Send 
-							</button>}
+							{!showReCaptcha && 
+								<button
+									className='py-1 px-2 bg-destructive hover:bg-[#C75D5D] w-[80px] h-fit 
+										self-center rounded-full text-white cursor-pointer'
+									onClick={buttonHandler}
+								>
+									Send 
+								</button>
+							}
 						</div>
 						{showReCaptcha && 
-							<ReCAPTCHA 
-								ref={captchaRef}
-								sitekey={process.env.CAPTCHA_SITE_KEY!}
-								onChange={recaptchaOnChange}
-								className='self-center'
-							/>
+							<div className='flex flex-col self-center'>
+								<div className='flex w-[300px] h-[74px] bg-gray-100 border rounded-s border-gray-300 animate-pulse'/>
+								<ReCAPTCHA 
+									ref={captchaRef}
+									sitekey={process.env.CAPTCHA_SITE_KEY!}
+									onChange={recaptchaOnChange}
+									className='self-center -mt-[74px] z-20'
+								/>
+							</div>
 						}
 					</form>
 				</div>
 				</div>
-			</AnimationWrapper>}
+			</AnimationWrapper>
 		</div>
   );
 }
