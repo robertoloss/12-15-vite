@@ -1,10 +1,8 @@
-import { useRef } from 'react';
 import AnimationWrapper from '@/components/AnimationWrapper';
 import emailjs from '@emailjs/browser';
-//import ReCAPTCHA from "react-google-recaptcha";
-import { useState } from 'react';
+import ReCAPTCHA from "react-google-recaptcha";
+import { useState, useEffect, useRef } from 'react';
 import { usePage } from '@/utils/my-store';
-import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 export default function Contact() {
@@ -12,11 +10,12 @@ export default function Contact() {
 	const nameInputRef = useRef<HTMLInputElement>(null)
 	const emailInputRef = useRef<HTMLInputElement>(null)
 	const messageInputRef = useRef<HTMLTextAreaElement>(null)
-	//const [capVal, setCapVal] = useState<string | null>(null)
+	const captchaRef = useRef<ReCAPTCHA | null>(null)
 	const [submitted, setSubmitted] = useState(false)
 	const [nameFocus, setNameFocus] = useState(false)
 	const [emailFocus, setEmailFocus] = useState(false)
 	const [messageFocus, setMessageFocus] = useState(false)
+	const [showReCaptcha, setShowReCaptcha] = useState(false)
 
 	const { pageOpen, setPageOpen } = usePage()
 	const location = useLocation()
@@ -25,8 +24,7 @@ export default function Contact() {
 		setPageOpen(true)
 	},[setPageOpen,location])
 
-  const sendEmail = (e: React.SyntheticEvent) => {
-    e.preventDefault();
+  const recaptchaOnChange = () => {
     emailjs.sendForm(	process.env.EMAILJS_SERVICE_ID!,
 											process.env.EMAILJS_TEMPLATE_ID!, 
 											form.current!, 
@@ -37,7 +35,17 @@ export default function Contact() {
 				console.log(error.text);
 		});
 		setSubmitted(true)
+		if (nameInputRef.current) nameInputRef.current.value = ""
+		if (emailInputRef.current) emailInputRef.current.value = ""
+		if (messageInputRef.current) messageInputRef.current.value = ""
   };
+
+  function buttonHandler() {
+		setShowReCaptcha(true)
+	}
+
+	
+
 	function nameLabelHandler() {
 		nameInputRef.current?.focus()
 		setNameFocus(true)
@@ -64,7 +72,8 @@ export default function Contact() {
 	}
 
 	function inputClassName(input: "nameOrEmail" | "message") : string {
-		const common = 'flex px-2 pt-4 rounded-sm border-2 border-white focus:outline-none focus:ring-0 focus:border-[#565a66]  focus:border-2'
+		const common = `flex px-2 pt-4 rounded-sm border-2 border-white 
+				focus:outline-none focus:ring-0 focus:border-[#565a66]  focus:border-2`
 		const specific = {
 			nameOrEmail: ' h-11',
 			message:  ' h-20 ',
@@ -84,10 +93,10 @@ export default function Contact() {
 					If you'd like to get in touch, please send a quick message along with your name and email address
 				</p>
 					<div className='flex flex-col w-full max-w-[400px]'>
-						<form ref={form} 
-						onSubmit={sendEmail} 
-						className='flex flex-col w-full gap-y-4'>
-
+						<form 
+							ref={form} 
+							onSubmit={(e)=>e.preventDefault()} 
+							className='flex flex-col w-full gap-y-4'>
 							<div className='flex relative flex-col'>
 								<label 
 									className={labelClassName("name")}
@@ -104,7 +113,6 @@ export default function Contact() {
 									onBlur={()=>setNameFocus(false)}
 								/>
 							</div>
-
 							<div className='flex relative flex-col'>
 								<label 
 									className={labelClassName("email")}
@@ -137,34 +145,29 @@ export default function Contact() {
 									onBlur={()=>setMessageFocus(false)}
 								/>
 							</div>
-
-
-							{/*{!capVal && 
-							<>
-								<ReCAPTCHA 
-									sitekey={process.env.CAPTCHA_SITE_KEY!}
-									onChange={(v)=>setCapVal(v)}
-									className='flex z-20 self-center'
-								/>
-								</>
-							*/}
-							{!submitted &&
-									//(capVal && !submitted) && 
-							<input 
-								type="submit" 
-								value="Send" 
-								onSubmit={()=>setSubmitted(true)}
-								//disabled={!capVal}
-								className='
-									mt-10 py-1 px-2 bg-sky-600 hover:bg-sky-700 w-[80px] 
-									self-center rounded-full text-white cursor-pointer
-								'
-							/>}
-							{submitted && <h1 className='mt-10 py-1 px-2 self-center font-semibold'>Sent!</h1>}
-						</form>
-					</div>
-			</div>
-		</AnimationWrapper>}
+						<div className='h-12 flex flex-col items-center justify-center'>
+							{(showReCaptcha && !submitted) && <h1> Click on the reCAPTCHA to send the email </h1>}
+							{submitted && <h1 className='py-1 px-2  font-semibold'>Email Sent!</h1>}
+							{!showReCaptcha && <button
+								className='py-1 px-2 bg-sky-600 hover:bg-sky-700 w-[80px] h-fit 
+									self-center rounded-full text-white cursor-pointer'
+								onClick={buttonHandler}
+							>
+								Send 
+							</button>}
+						</div>
+						{showReCaptcha && 
+							<ReCAPTCHA 
+								ref={captchaRef}
+								sitekey={process.env.CAPTCHA_SITE_KEY!}
+								onChange={recaptchaOnChange}
+								className='self-center'
+							/>
+						}
+					</form>
+				</div>
+				</div>
+			</AnimationWrapper>}
 		</div>
   );
 }
