@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import AnimationWrapper from '@/components/AnimationWrapper';
-//import emailjs from '@emailjs/browser';
+import emailjs from '@emailjs/browser';
 //import ReCAPTCHA from "react-google-recaptcha";
 import { useState } from 'react';
 import { usePage } from '@/utils/my-store';
@@ -25,19 +25,19 @@ export default function Contact() {
 		setPageOpen(true)
 	},[setPageOpen,location])
 
-  //const sendEmail = (e: React.SyntheticEvent) => {
-  //  e.preventDefault();
-  //  emailjs.sendForm(	process.env.EMAILJS_SERVICE_ID!,
-	//										process.env.EMAILJS_TEMPLATE_ID!, 
-	//										form.current!, 
-	//										process.env.EMAILJS_PUBLIC_KEY!)
-	//	.then((result) => {
-	//			console.log(result.text);
-	//	}, (error) => {
-	//			console.log(error.text);
-	//	});
-	//	setSubmitted(true)
-  //};
+  const sendEmail = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    emailjs.sendForm(	process.env.EMAILJS_SERVICE_ID!,
+											process.env.EMAILJS_TEMPLATE_ID!, 
+											form.current!, 
+											process.env.EMAILJS_PUBLIC_KEY!)
+		.then((result) => {
+				console.log(result.text);
+		}, (error) => {
+				console.log(error.text);
+		});
+		setSubmitted(true)
+  };
 	function nameLabelHandler() {
 		nameInputRef.current?.focus()
 		setNameFocus(true)
@@ -85,7 +85,7 @@ export default function Contact() {
 				</p>
 					<div className='flex flex-col w-full max-w-[400px]'>
 						<form ref={form} 
-						// onSubmit={sendEmail} 
+						onSubmit={sendEmail} 
 						className='flex flex-col w-full gap-y-4'>
 
 							<div className='flex relative flex-col'>
