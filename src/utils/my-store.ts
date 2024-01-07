@@ -7,5 +7,5 @@ export type CurrentPageState = {
 
 export const usePage = create<CurrentPageState>()((set) => ({
 	pageOpen: true,
-	setPageOpen: (b:boolean) => set((state)=>({pageOpen: b}))
+	setPageOpen: (b:boolean) => set(()=>({pageOpen: b}))
 }))

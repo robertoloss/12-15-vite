@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import AnimationWrapper from '@/components/AnimationWrapper';
-import emailjs from '@emailjs/browser';
+//import emailjs from '@emailjs/browser';
 //import ReCAPTCHA from "react-google-recaptcha";
 import { useState } from 'react';
 import { usePage } from '@/utils/my-store';
@@ -84,7 +84,9 @@ export default function Contact() {
 					If you'd like to get in touch, please send a quick message along with your name and email address
 				</p>
 					<div className='flex flex-col w-full max-w-[400px]'>
-						<form ref={form} onSubmit={sendEmail} className='flex flex-col w-full gap-y-4'>
+						<form ref={form} 
+						// onSubmit={sendEmail} 
+						className='flex flex-col w-full gap-y-4'>
 
 							<div className='flex relative flex-col'>
 								<label 
