@@ -74,6 +74,7 @@ export default function Contact() {
 
 
   return (<div className='min-h-screen'>
+		{pageOpen && <AnimationWrapper>
 			<div className='flex flex-col w-full items-center py-10 gap-y-10 
 				sm:py-14 px-6 sm:gap-y-10 min-h-[calc(100vh-290px)]'>
 				<h1 className='text-4xl font-bold'>
@@ -136,31 +137,29 @@ export default function Contact() {
 							</div>
 
 
-							
+							{!capVal && 
+							<>
+								<ReCAPTCHA 
+									sitekey={process.env.CAPTCHA_SITE_KEY!}
+									onChange={(v)=>setCapVal(v)}
+									className='flex z-20 self-center'
+								/>
+								</>
+							}
+							{(capVal && !submitted) && <input 
+								type="submit" 
+								value="Send" 
+								disabled={!capVal}
+								className='
+									mt-10 py-1 px-2 bg-sky-600 hover:bg-sky-700 w-[80px] 
+									self-center rounded-full text-white cursor-pointer
+								'
+							/>}
+							{submitted && <h1 className='mt-10 py-1 px-2 self-center font-semibold'>Sent!</h1>}
 						</form>
 					</div>
 			</div>
+		</AnimationWrapper>}
 		</div>
   );
 }
-
-
-//{!capVal && 
-//							<>
-//								<ReCAPTCHA 
-//									sitekey={process.env.CAPTCHA_SITE_KEY!}
-//									onChange={(v)=>setCapVal(v)}
-//									className='flex z-20 self-center'
-//								/>
-//								</>
-//							}
-//							{(capVal && !submitted) && <input 
-//								type="submit" 
-//								value="Send" 
-//								disabled={!capVal}
-//								className='
-//									mt-10 py-1 px-2 bg-sky-600 hover:bg-sky-700 w-[80px] 
-//									self-center rounded-full text-white cursor-pointer
-//								'
-//							/>}
-//							{submitted && <h1 className='mt-10 py-1 px-2 self-center font-semibold'>Sent!</h1>}
