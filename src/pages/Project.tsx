@@ -5,20 +5,27 @@ import ThreeColumns from "@/components/ThreeColumns";
 import HeroProject from "@/components/HeroProject";
 import BigPicture from "@/components/BigPicture";
 import { createColumns } from "@/utils/create-columns";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useLocation } from "react-router-dom";
 import AnimationWrapper from "@/components/AnimationWrapper";
+import { usePage } from "@/utils/my-store";
+import { useEffect } from "react";
  
 export default function ProjectPage() {
 	const projectArray : Project[] | null = useLoaderData() as Project[] | null
 	const project : Project | null = projectArray ? projectArray[0] : null
-	
 	const columns = project ? createColumns(project) : []	
+	const { pageOpen, setPageOpen } = usePage()
+	const location = useLocation()
+	
+	useEffect(()=>{
+		setPageOpen(true)
+	},[setPageOpen,location])
 
 	window.scrollTo(0,0)
-
-	return (
-		<AnimationWrapper>
-			<div className="flex flex-col items-center px-8 w-full min-h-[100vh]">
+	
+	return (<div className="min-h-screen">
+		{pageOpen && <AnimationWrapper>
+			<div className="flex flex-col items-center px-8 w-full">
 				{ ( !project ) && <h1>Uh oh! Something went wrong... 🤔</h1> } {/* deleted loaded && */}
 
 				{ project && <HeroProject project={project} /> }
@@ -27,6 +34,7 @@ export default function ProjectPage() {
 				{ project?.sections?.map((section: SectionType, key: number) => 
 							<Section section={section} sectionNum={key} key={key}/>) }
 			</div>
-		</AnimationWrapper>
+		</AnimationWrapper>}
+		</div>
 	)
 }

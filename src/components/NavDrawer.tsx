@@ -17,17 +17,17 @@ export default function NavDrawer({ hamMenuHandler, previews } : Props) {
 	}
  
 	return (
-		<div className="absolute top-0 left-0 w-screen bg-white h-screen p-4 ">
+		<div className="absolute top-0 left-0 w-screen h-screen bg-background p-4 ">
 			<div className="flex flex-col gap-y-10 w-full h-full">
 				<div className="flex flex-row h-fit w-full mt-1 justify-between items-center" onClick={hamMenuHandler}>
-					<Link to={'/'} className="w-fit text-2xl font-semibold">
-						Amy N Jackson
+					<Link to={'/'} className="w-fit text-2xl font-semibold select-none" >
+						Amy Jackson
 					</Link>
 					<div className="w-fit -mr-1">
 						<IoCloseOutline size='40px'/>
 					</div>
 				</div>
-				<div className="flex flex-col items-center w-full ">
+				<div className="flex flex-col items-center w-full select-none">
 					<h1 className={`self-start text-2xl font-normal w-full `}
 						onClick={showHandler}
 					>
@@ -44,7 +44,7 @@ export default function NavDrawer({ hamMenuHandler, previews } : Props) {
 							<ProjectsNavBar hamMenuHandler={hamMenuHandler} previews={previews} open={true} navBar={true}/>
 						</div>	
 					</div>
-					<Link to={'/about'} onClick={hamMenuHandler} className="self-start w-full text-2xl mt-10 font-normal">
+					<Link to={'/about'} onClick={hamMenuHandler} className="self-start select-none w-full text-2xl mt-10 font-normal">
 						About
 					</Link>
 					<Link to={'/contact'} onClick={hamMenuHandler} className="self-start text-2xl w-full mt-10 font-normal">

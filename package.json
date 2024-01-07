@@ -31,7 +31,8 @@
     "react-router-dom": "^6.21.0",
     "sort-by": "^1.2.0",
     "tailwind-merge": "^2.1.0",
-    "vite-plugin-require": "^1.1.14"
+    "vite-plugin-require": "^1.1.14",
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@types/node": "^20.10.4",

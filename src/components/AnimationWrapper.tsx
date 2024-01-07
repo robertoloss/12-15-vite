@@ -19,7 +19,7 @@ export default function AnimationWrapper({ children, isVisible } : Props) {
 				animate={{ 
 					opacity: 1, 
 					//x: 0, 
-					transition: {ease: 'easeOut', duration: .5} }}
+					transition: {ease: 'easeOut', duration: .1} }}
 				exit={{ 
 					opacity: 0, 
 					//x: -50

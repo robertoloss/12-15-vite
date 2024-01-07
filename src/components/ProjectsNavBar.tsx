@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import { Preview } from "@/sanity/sanity-types"
 import { urlFor } from "@/sanity/client"
 import { useState } from "react"
+import { usePage } from "@/utils/my-store"
 
 const components : PortableTextComponents = {
   block: {
@@ -25,11 +26,13 @@ type Prop = {
 
 export default function ProjectsNavBar({ previews, hamMenuHandler, openCurry,   navBar, setForceClose, forceClose} : Prop) {
 	const [loading, setLoading] = useState(true)
+	const { setPageOpen } = usePage()
 	
 	function loaderHandler() {
 		setLoading(false)
 	}
 	function clickHandler() {
+		setPageOpen(false)
 		hamMenuHandler && hamMenuHandler()
 		if (openCurry && setForceClose) {
 			setForceClose(true)
@@ -41,7 +44,7 @@ export default function ProjectsNavBar({ previews, hamMenuHandler, openCurry,   
 	return (
 		<>{!forceClose && 
 		<div 
-			className={`bg-white flex z-20 flex-col w-[288px] gap-y-2  text-[#3D4048]
+			className={`flex z-20 flex-col w-[288px] gap-y-2  text-[#3D4048]
 				     ${navBar ? 'mt-8' : ''}`}
 			onMouseEnter={openCurry ? openCurry("open") : ()=>{}}
 			onMouseLeave={openCurry ? openCurry("close") : ()=>{}}
@@ -68,8 +71,13 @@ export default function ProjectsNavBar({ previews, hamMenuHandler, openCurry,   
 									</div>
 									<div className="flex flex-col h-full w-full overflow-hidden
 										text-ellipsis items-start justify-center">
-										<h1 className="w-full font-medium group-hover:text-destructive"> {preview.navBarTitle} </h1>
-											<PortableText components={components} value={preview.navBarDescription}/>
+										<h1 className="w-full font-medium group-hover:text-destructive">
+											{preview.navBarTitle} 
+										</h1>
+											<PortableText
+												components={components}
+												value={preview.navBarDescription}
+											/>
 									</div>
 								</div>
 							</div>

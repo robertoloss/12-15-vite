@@ -3,6 +3,9 @@ import AnimationWrapper from '@/components/AnimationWrapper';
 import emailjs from '@emailjs/browser';
 import ReCAPTCHA from "react-google-recaptcha";
 import { useState } from 'react';
+import { usePage } from '@/utils/my-store';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export default function Contact() {
   const form = useRef<HTMLFormElement>(null);
@@ -14,6 +17,13 @@ export default function Contact() {
 	const [nameFocus, setNameFocus] = useState(false)
 	const [emailFocus, setEmailFocus] = useState(false)
 	const [messageFocus, setMessageFocus] = useState(false)
+
+	const { pageOpen, setPageOpen } = usePage()
+	const location = useLocation()
+	
+	useEffect(()=>{
+		setPageOpen(true)
+	},[setPageOpen,location])
 
   const sendEmail = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -63,9 +73,10 @@ export default function Contact() {
 	}
 
 
-  return (
-		<AnimationWrapper>
-			<div className='flex flex-col w-full items-center py-10 gap-y-10 sm:py-14 px-6 sm:gap-y-10 min-h-[calc(100vh-290px)]'>
+  return (<div className='min-h-screen'>
+		{pageOpen && <AnimationWrapper>
+			<div className='flex flex-col w-full items-center py-10 gap-y-10 
+				sm:py-14 px-6 sm:gap-y-10 min-h-[calc(100vh-290px)]'>
 				<h1 className='text-4xl font-bold'>
 					Contact
 				</h1>
@@ -148,6 +159,7 @@ export default function Contact() {
 						</form>
 					</div>
 			</div>
-		</AnimationWrapper>
+		</AnimationWrapper>}
+		</div>
   );
 }

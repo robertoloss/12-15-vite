@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { Preview } from "@/sanity/sanity-types.ts";
 import { useState } from "react";
 import { Link } from "react-router-dom"
+import { usePage } from "@/utils/my-store";
 
 type Prop = {
 	previews: Preview[]
@@ -12,6 +13,7 @@ export default function NavBar({ previews } : Prop) {
 	const [open, setOpen] = useState<boolean>(false);
 	const [forceClose, setForceClose] = useState(false)
 	const again = useRef(false);
+	const { setPageOpen } = usePage()
 	
 	function openHandler(status : "open" | "close") {
 		if (status === "open") {
@@ -54,12 +56,12 @@ export default function NavBar({ previews } : Prop) {
 					</div>}
 			</div>
 			<Link to={'/about'}  className="flex relative w-fit">
-				<div className="w-fit hover:text-destructive">
+				<div className="w-fit hover:text-destructive" onClick={()=>setPageOpen(false)}>
 					About
 				</div>
 			</Link>
 			<Link to={'/contact'}  className="w-fit ">
-				<div className="w-fit hover:text-destructive">
+				<div className="w-fit hover:text-destructive" onClick={()=>setPageOpen(false)}>
 					Contact
 				</div>
 			</Link>
@@ -67,14 +69,3 @@ export default function NavBar({ previews } : Prop) {
 		</div>
 	)
 }
-
-{/*<NavigationMenu>
-<NavigationMenuList>
-	<NavigationMenuItem>
-		<NavigationMenuTrigger  className="text-lg">Work</NavigationMenuTrigger>
-			<NavigationMenuContent onClick={openHandler} className="-left-10" >
-				{open && <ProjectsNavBar previews={previews} /> }	
-			</NavigationMenuContent>
-	</NavigationMenuItem>
-</NavigationMenuList>
-</NavigationMenu>*/}

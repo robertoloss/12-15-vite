@@ -5,6 +5,7 @@ import { Preview } from "@/sanity/sanity-types";
 import { urlFor } from "@/sanity/client";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { useState } from "react";
+import { usePage } from "@/utils/my-store";
 
 type Props = {
 	preview: Preview 
@@ -22,6 +23,7 @@ const components : PortableTextComponents = {
 
 export default function PreviewCard({ preview } : Props) {
 	const [loading, setLoading] = useState(true)
+	const { setPageOpen } = usePage()
 
 	function loadingHandler() {
 		setLoading(false)
@@ -32,7 +34,7 @@ export default function PreviewCard({ preview } : Props) {
 	const lqipUrl = preview.picture ? urlFor(preview.picture?.image)?.width(24)?.url() : "" 
 	
 	return (
-		<Link to={`/projects/${preview.slug}`}>
+		<Link to={`/projects/${preview.slug}`} onClick={()=>setPageOpen}>
 			<div className="flex flex-col md:flex-row relative p-6 border-y-2 sm:border-2 sm:rounded-lg w-full 
 				sm:max-w-[960px]  min-h-[360px] bg-muted gap-x-[80px] gap-y-4 hover:shadow-gray-500 hover:shadow-lg transition-all">
 				<div className={`relative flex flex-col  ${!preview ? "bg-gray-100 animate-fast-pulse" : ""}

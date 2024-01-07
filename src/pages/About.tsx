@@ -4,6 +4,9 @@ import { Website } from "@/sanity/sanity-types"
 import { PortableTextComponents, PortableText } from "@portabletext/react"
 import { useLoaderData } from "react-router-dom"
 import AnimationWrapper from "@/components/AnimationWrapper"
+import { useLocation } from "react-router-dom"
+import { usePage } from "@/utils/my-store"
+import { useEffect } from "react"
 
 const components : PortableTextComponents = {
   block: {
@@ -26,6 +29,14 @@ export default function About() {
 	const [loading, setLoading] = useState(true)
 	const [loading2, setLoading2] = useState(true)
 
+	const { pageOpen, setPageOpen } = usePage()
+	const location = useLocation()
+	
+	useEffect(()=>{
+		setPageOpen(true)
+	},[setPageOpen,location])
+
+
 	function loadingHandler() {
 		setLoading(false)
 	}
@@ -35,8 +46,8 @@ export default function About() {
 
 	const website = useLoaderData() as Website
 
-	return (
-		<AnimationWrapper>
+	return (<div className="min-h-screen">
+		{pageOpen && <AnimationWrapper>
 		<div className="flex flex-col min-h-[100vh] mb-[200px]">
 		{website && <div className="flex flex-col px-6"> 
 			<div className="py-10 flex flex-col w-full items-center">
@@ -90,6 +101,7 @@ export default function About() {
 			</div>
 		</div>}
 	</div>
-	</AnimationWrapper>)
+	</AnimationWrapper>}
+	</div>)
 }
 	
