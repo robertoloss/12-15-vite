@@ -74,7 +74,7 @@ export default function Contact() {
 
 
   return (<div className='min-h-screen'>
-		{pageOpen && <AnimationWrapper>
+		{pageOpen && 
 			<div className='flex flex-col w-full items-center py-10 gap-y-10 
 				sm:py-14 px-6 sm:gap-y-10 min-h-[calc(100vh-290px)]'>
 				<h1 className='text-4xl font-bold'>
@@ -159,7 +159,7 @@ export default function Contact() {
 						</form>
 					</div>
 			</div>
-		</AnimationWrapper>}
+		}
 		</div>
   );
 }
