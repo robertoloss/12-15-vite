@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import AnimationWrapper from '@/components/AnimationWrapper';
 import emailjs from '@emailjs/browser';
-import ReCAPTCHA from "react-google-recaptcha";
+//import ReCAPTCHA from "react-google-recaptcha";
 import { useState } from 'react';
 import { usePage } from '@/utils/my-store';
 import { useEffect } from 'react';
@@ -12,8 +12,8 @@ export default function Contact() {
 	const nameInputRef = useRef<HTMLInputElement>(null)
 	const emailInputRef = useRef<HTMLInputElement>(null)
 	const messageInputRef = useRef<HTMLTextAreaElement>(null)
-	const [capVal, setCapVal] = useState<string | null>(null)
-	const [submitted, setSubmitted] = useState(false)
+	//const [capVal, setCapVal] = useState<string | null>(null)
+	//const [submitted, setSubmitted] = useState(false)
 	const [nameFocus, setNameFocus] = useState(false)
 	const [emailFocus, setEmailFocus] = useState(false)
 	const [messageFocus, setMessageFocus] = useState(false)
@@ -25,19 +25,19 @@ export default function Contact() {
 		setPageOpen(true)
 	},[setPageOpen,location])
 
-  const sendEmail = (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    emailjs.sendForm(	process.env.EMAILJS_SERVICE_ID!,
-											process.env.EMAILJS_TEMPLATE_ID!, 
-											form.current!, 
-											process.env.EMAILJS_PUBLIC_KEY!)
-		.then((result) => {
-				console.log(result.text);
-		}, (error) => {
-				console.log(error.text);
-		});
-		setSubmitted(true)
-  };
+  //const sendEmail = (e: React.SyntheticEvent) => {
+  //  e.preventDefault();
+  //  emailjs.sendForm(	process.env.EMAILJS_SERVICE_ID!,
+	//										process.env.EMAILJS_TEMPLATE_ID!, 
+	//										form.current!, 
+	//										process.env.EMAILJS_PUBLIC_KEY!)
+	//	.then((result) => {
+	//			console.log(result.text);
+	//	}, (error) => {
+	//			console.log(error.text);
+	//	});
+	//	setSubmitted(true)
+  //};
 	function nameLabelHandler() {
 		nameInputRef.current?.focus()
 		setNameFocus(true)
@@ -137,7 +137,7 @@ export default function Contact() {
 							</div>
 
 
-							{!capVal && 
+							{/*{!capVal && 
 							<>
 								<ReCAPTCHA 
 									sitekey={process.env.CAPTCHA_SITE_KEY!}
@@ -155,7 +155,7 @@ export default function Contact() {
 									self-center rounded-full text-white cursor-pointer
 								'
 							/>}
-							{submitted && <h1 className='mt-10 py-1 px-2 self-center font-semibold'>Sent!</h1>}
+							{submitted && <h1 className='mt-10 py-1 px-2 self-center font-semibold'>Sent!</h1>}*/}
 						</form>
 					</div>
 			</div>
