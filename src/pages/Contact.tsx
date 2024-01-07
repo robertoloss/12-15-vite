@@ -136,28 +136,31 @@ export default function Contact() {
 							</div>
 
 
-							{!capVal && 
-							<>
-								<ReCAPTCHA 
-									sitekey={process.env.CAPTCHA_SITE_KEY!}
-									onChange={(v)=>setCapVal(v)}
-									className='flex z-20 self-center'
-								/>
-								</>
-							}
-							{(capVal && !submitted) && <input 
-								type="submit" 
-								value="Send" 
-								disabled={!capVal}
-								className='
-									mt-10 py-1 px-2 bg-sky-600 hover:bg-sky-700 w-[80px] 
-									self-center rounded-full text-white cursor-pointer
-								'
-							/>}
-							{submitted && <h1 className='mt-10 py-1 px-2 self-center font-semibold'>Sent!</h1>}
+							
 						</form>
 					</div>
 			</div>
 		</div>
   );
 }
+
+
+//{!capVal && 
+//							<>
+//								<ReCAPTCHA 
+//									sitekey={process.env.CAPTCHA_SITE_KEY!}
+//									onChange={(v)=>setCapVal(v)}
+//									className='flex z-20 self-center'
+//								/>
+//								</>
+//							}
+//							{(capVal && !submitted) && <input 
+//								type="submit" 
+//								value="Send" 
+//								disabled={!capVal}
+//								className='
+//									mt-10 py-1 px-2 bg-sky-600 hover:bg-sky-700 w-[80px] 
+//									self-center rounded-full text-white cursor-pointer
+//								'
+//							/>}
+//							{submitted && <h1 className='mt-10 py-1 px-2 self-center font-semibold'>Sent!</h1>}
