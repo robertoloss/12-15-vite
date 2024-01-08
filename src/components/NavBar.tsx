@@ -4,6 +4,7 @@ import { Preview } from "@/sanity/sanity-types.ts";
 import { useState } from "react";
 import { Link } from "react-router-dom"
 import { usePage } from "@/utils/my-store";
+import { motion, AnimatePresence } from "framer-motion";
 
 type Prop = {
 	previews: Preview[]
@@ -12,6 +13,7 @@ type Prop = {
 export default function NavBar({ previews } : Prop) {
 	const [open, setOpen] = useState<boolean>(false);
 	const [forceClose, setForceClose] = useState(false)
+	const [workHover, setWorkHover] = useState(false);
 	const again = useRef(false);
 	const { setPageOpen } = usePage()
 	
@@ -19,10 +21,14 @@ export default function NavBar({ previews } : Prop) {
 		if (status === "open") {
 			setOpen(true)
 			again.current = true
+			setWorkHover(true)
 		} else {
-			again.current = false 
+			again.current = false
 			setTimeout(()=>{
-				if (again.current === false) setOpen(false)
+				if (again.current === false) {
+					setOpen(false)
+					setWorkHover(false)
+				}
 			}, 200)
 		}
 	}
@@ -42,18 +48,27 @@ export default function NavBar({ previews } : Prop) {
 				>
 					Work
 				</div >
-					{!forceClose && 
-					<div className={`absolute mt-[32px] -ml-[180px] shadow-xl opacity-0 transition-{opacity}
-						 w-fit overflow-hidden bg-white rounded-lg 
-						${open ? 'h-fit p-4 opacity-100 border-2 border-gray-200':'h-0'}`}>
-						<ProjectsNavBar 
-							previews={previews}
-							openCurry={openCurry}
-							open={open}
-							setForceClose={setForceClose}
-							forceClose={forceClose}
-						/>
-					</div>}
+					{!forceClose &&
+						<AnimatePresence> {open &&
+							<motion.div 
+								className={`absolute grid mt-[32px] -ml-[180px] shadow-xl p-4
+										 w-fit overflow-hidden bg-white rounded-lg border-gray-200 border-2 h-fit`}
+								initial={{opacity: 0,  scale: .9 }}
+								animate={{opacity: 1,  scale: 1 }}
+								exit={{opacity: 0, scale: .9 }}
+								
+							>
+								<ProjectsNavBar 
+									previews={previews}
+									openCurry={openCurry}
+									open={open}
+									setForceClose={setForceClose}
+									forceClose={forceClose}
+									workHover={workHover}
+								/>
+							</motion.div>}
+						</AnimatePresence>
+					}
 			</div>
 			<Link to={'/about'}  className="flex relative w-fit">
 				<div className="w-fit hover:text-destructive" onClick={()=>setPageOpen(false)}>

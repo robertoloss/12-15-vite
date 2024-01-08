@@ -38,7 +38,7 @@ export default function Footer() {
 					</a>
 					<div className="flex flex-row min-w-[200px] gap-x-4">
 					{iconsArray.map((iconArr: Picture[], key : number)=>
-						<FooterIcon iconArr={iconArr} key={key} />	
+						<FooterIcon iconArr={iconArr} key={key} index={key} />	
 					)}
 					</div>
 				</div>
