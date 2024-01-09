@@ -5,6 +5,7 @@ import NavDrawer from "./NavDrawer";
 import { Preview } from "@/sanity/sanity-types";
 import { Link, useLocation } from "react-router-dom";
 import { usePage } from "@/utils/my-store";
+//import { AnimatePresence, motion } from "framer-motion";
 
 type Props = {
 	previews: Preview[]
@@ -37,8 +38,6 @@ export default function HeaderBar({ previews } : Props) {
 	}
 
 	
-																
-
 	return (
 		<div className={`top-0 sticky z-50 flex flex-col select-none 
 		items-center h-20 w-full ${shadow ? 'bg-white' : 'bg-background'}`}
@@ -48,19 +47,26 @@ export default function HeaderBar({ previews } : Props) {
 			}}
 		>
 			<div className="flex flex-row select-none h-full w-full max-w-7xl justify-between items-center  p-4" >
-				<Link to={'/'}
+				{!navDrawer && <Link to={'/'}
 					className="w-fit text-2xl font-raleway select-none font-light text-destructive"
 					onClick={()=>setPageOpen(false,'',location)}
 				>
 					Amy Jackson 
-				</Link>
+				</Link>}
 				<div className="hidden md:block">
 					<NavBar previews={previews!}/>
 				</div>
 				<div className="block md:hidden" onClick={()=>{setPageOpen(false); setNavDrawer(p=>!p)}}>
-					<RxHamburgerMenu size='32px'/>
+					{!navDrawer && <RxHamburgerMenu size='32px'/>}
 				</div>
-				{navDrawer && <NavDrawer previews={previews!} setNavDrawer={setNavDrawer} setPageOpen={setPageOpen} hamMenuCurry={hamMenuCurry}/> }
+					{navDrawer && 
+						<NavDrawer 
+							previews={previews!} 
+							setNavDrawer={setNavDrawer} 
+							setPageOpen={setPageOpen} 
+							hamMenuCurry={hamMenuCurry}
+						/> 
+					}
 			</div>
 		</div>
 	)
