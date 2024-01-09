@@ -7,10 +7,12 @@ import { useState } from "react";
 
 type Props = {
 	previews: Preview[] 
-	hamMenuHandler: ()=>void
+	hamMenuCurry: (s:string | undefined)=>(()=>void)
+	setNavDrawer: (b:boolean)=>void
+	setPageOpen: (b:boolean)=>void
 }
 
-export default function NavDrawer({ hamMenuHandler, previews } : Props) {
+export default function NavDrawer({ hamMenuCurry, previews, setNavDrawer, setPageOpen } : Props) {
 	const [show, setShow] = useState<boolean>(false)
 	function showHandler() {
 		setShow(prev => !prev)
@@ -19,11 +21,11 @@ export default function NavDrawer({ hamMenuHandler, previews } : Props) {
 	return (
 		<div className="absolute top-0 left-0 w-screen h-screen bg-background p-4 ">
 			<div className="flex flex-col gap-y-10 w-full h-full">
-				<div className="flex flex-row h-fit w-full mt-1 justify-between items-center" onClick={hamMenuHandler}>
-					<Link to={'/'} className="w-fit text-2xl font-semibold select-none" >
+				<div className="flex flex-row h-fit w-full mt-1 justify-between items-center" >
+					<Link to={'/'}  className="w-fit text-2xl font-semibold select-none" >
 						Amy Jackson
 					</Link>
-					<div className="w-fit -mr-1">
+					<div className="w-fit -mr-1" onClick={()=>{setNavDrawer(false); setPageOpen(true)}}>
 						<IoCloseOutline size='40px'/>
 					</div>
 				</div>
@@ -41,13 +43,22 @@ export default function NavDrawer({ hamMenuHandler, previews } : Props) {
 						}}
 					>
 						<div className="overflow-hidden" >
-							<ProjectsNavBar hamMenuHandler={hamMenuHandler} previews={previews} open={true} navBar={true}/>
+							<ProjectsNavBar 
+								hamMenuCurry={hamMenuCurry} 
+								setNavDrawer={setNavDrawer} 
+								previews={previews} 
+								open={true} 
+								navBar={true}/>
 						</div>	
 					</div>
-					<Link to={'/about'} onClick={hamMenuHandler} className="self-start select-none w-full text-2xl mt-10 font-normal">
+					<Link to={'/about'} onClick={hamMenuCurry('about')} 
+						className="self-start select-none w-full text-2xl mt-10 font-normal"
+					>
 						About
 					</Link>
-					<Link to={'/contact'} onClick={hamMenuHandler} className="self-start text-2xl w-full mt-10 font-normal">
+					<Link to={'/contact'} onClick={hamMenuCurry('contact')} 
+						className="self-start text-2xl w-full mt-10 font-normal"
+					>
 						Contact
 					</Link>
 				</div>

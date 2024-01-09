@@ -24,14 +24,19 @@ export default function HeaderBar({ previews } : Props) {
     return  () => window.removeEventListener("scroll", scroll, false);
   },[])
 
-	function hamMenuHandler() {
-		setPageOpen(false)
-		setNavDrawer(prev => !prev)
-	}
-
 	const location = useLocation().pathname
 																.split('/')
 																.slice(-1)[0]
+
+	function hamMenuHandler(slug: string | undefined) {
+		setPageOpen(false, slug, location)
+		setNavDrawer(prev => !prev)
+	}
+	function hamMenuCurry(slug:string | undefined) {
+		return ()=>	hamMenuHandler(slug)
+	}
+
+	
 																
 
 	return (
@@ -47,13 +52,15 @@ export default function HeaderBar({ previews } : Props) {
 					className="w-fit text-2xl font-raleway select-none font-light text-destructive"
 					onClick={()=>setPageOpen(false,'',location)}
 				>
-					Amy Jackson
+					Amy Jackson 
 				</Link>
 				<div className="hidden md:block">
 					<NavBar previews={previews!}/>
 				</div>
-				<div className="block md:hidden" onClick={hamMenuHandler}><RxHamburgerMenu size='32px'/></div>
-				{navDrawer && <NavDrawer previews={previews!} hamMenuHandler={hamMenuHandler}/> }
+				<div className="block md:hidden" onClick={()=>{setPageOpen(false); setNavDrawer(p=>!p)}}>
+					<RxHamburgerMenu size='32px'/>
+				</div>
+				{navDrawer && <NavDrawer previews={previews!} setNavDrawer={setNavDrawer} setPageOpen={setPageOpen} hamMenuCurry={hamMenuCurry}/> }
 			</div>
 		</div>
 	)

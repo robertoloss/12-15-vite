@@ -16,18 +16,20 @@ const components : PortableTextComponents = {
 }
 type Prop = {
 	previews: Preview[]
-	hamMenuHandler?: ()=>void
+	hamMenuCurry?: (s:string | undefined)=>()=>void
 	openCurry?: (s: "open" | "close")=>()=>void
 	open?: boolean
 	navBar?: boolean
 	setForceClose?: (b:boolean)=>void
 	forceClose?: boolean
 	workHover?: boolean
+	setNavDrawer?: (b:boolean)=>void
 }
 
 
 export default function ProjectsNavBar({	previews, 
-																					hamMenuHandler, 
+																					//hamMenuCurry, 
+																					setNavDrawer,
 																					openCurry,   
 																					navBar, 
 																					setForceClose, 
@@ -43,7 +45,8 @@ export default function ProjectsNavBar({	previews,
 	}
 	function clickHandler(slug:string | undefined) {
 		setPageOpen(false, slug, location)
-		hamMenuHandler && hamMenuHandler()
+		setNavDrawer && setNavDrawer(false)
+		//hamMenuCurry && hamMenuCurry(slug)
 		if (openCurry && setForceClose) {
 			setForceClose(true)
 			openCurry("close")()
