@@ -1,6 +1,6 @@
 //import { NavigationMenuLink } from "@radix-ui/react-navigation-menu" 
 import { PortableTextComponents, PortableText } from "@portabletext/react"
-import { Link } from "react-router-dom"
+import { Link,useLocation } from "react-router-dom"
 import { Preview } from "@/sanity/sanity-types"
 import { urlFor } from "@/sanity/client"
 import { useState } from "react"
@@ -25,23 +25,24 @@ type Prop = {
 	workHover?: boolean
 }
 
-export default function ProjectsNavBar({ 
-																					previews, 
+
+export default function ProjectsNavBar({	previews, 
 																					hamMenuHandler, 
 																					openCurry,   
 																					navBar, 
 																					setForceClose, 
 																					forceClose,
-																					workHover
-																			} : Prop) {
+																					workHover } : Prop) {
 	const [loading, setLoading] = useState(true)
 	const { setPageOpen } = usePage()
 	
+	const location = useLocation().pathname.split('/').slice(-1)[0]
+
 	function loaderHandler() {
 		setLoading(false)
 	}
-	function clickHandler() {
-		setPageOpen(false)
+	function clickHandler(slug:string | undefined) {
+		setPageOpen(false, slug, location)
 		hamMenuHandler && hamMenuHandler()
 		if (openCurry && setForceClose) {
 			setForceClose(true)
@@ -49,6 +50,12 @@ export default function ProjectsNavBar({
 			setTimeout(()=>setForceClose(false), 1000)
 		}
 	}
+	function clickHandlerCurry(slug: string | undefined) {
+		return () => {
+			clickHandler(slug)
+		}
+	}
+
 	
 	return (
 		<>{!forceClose && 
@@ -65,7 +72,7 @@ export default function ProjectsNavBar({
 						className={`w-full group `} 
 						key={key}
 					>
-						<Link onClick={clickHandler} to={`/projects/${preview.slug}`}>
+						<Link onClick={clickHandlerCurry(preview.slug)} to={`/projects/${preview.slug}`}>
 							<div className="flex flex-col w-full h-20  p-0 ">
 								<div className="flex flex-row h-full justify-start gap-x-4 items-center">
 									<div className={`relative flex flex-col w-[200px] h-full justify-center`}>

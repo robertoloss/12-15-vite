@@ -1,4 +1,5 @@
 import ProjectsNavBar from "./ProjectsNavBar";
+import { useLocation } from "react-router-dom";
 import { useRef } from "react";
 import { Preview } from "@/sanity/sanity-types.ts";
 import { useState } from "react";
@@ -33,10 +34,10 @@ export default function NavBar({ previews } : Prop) {
 		}
 	}
 	function openCurry(status: "open" | "close") {
-		return function handler() {
-			openHandler(status)
-		}
+		return () => openHandler(status)
 	}
+
+	const location = useLocation().pathname.split('/').slice(-1)[0]
 
 	return (
 		<div className="flex flex-row space-x-8 w-fit text-lg font-medium items-center">
@@ -71,12 +72,12 @@ export default function NavBar({ previews } : Prop) {
 					}
 			</div>
 			<Link to={'/about'}  className="flex relative w-fit">
-				<div className="w-fit hover:text-destructive" onClick={()=>setPageOpen(false)}>
+				<div className="w-fit hover:text-destructive" onClick={()=>setPageOpen(false,'about',location)}>
 					About
 				</div>
 			</Link>
 			<Link to={'/contact'}  className="w-fit ">
-				<div className="w-fit hover:text-destructive" onClick={()=>setPageOpen(false)}>
+				<div className="w-fit hover:text-destructive" onClick={()=>setPageOpen(false,'contact',location)}>
 					Contact
 				</div>
 			</Link>

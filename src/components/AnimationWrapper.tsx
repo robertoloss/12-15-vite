@@ -14,16 +14,16 @@ export default function AnimationWrapper({ children, pageOpen } : Props) {
 				key={location.pathname}
 				initial={{ 
 					opacity: 0, 
-					x: 50 
+					//x: 50 
 				}}
 				animate={{ 
 					opacity: 1, 
-					x: 0, 
+					//x: 0, 
 					transition: {ease: 'easeOut', duration: .5} }}
 				exit={{ 
 					opacity: 0, 
 					transition: {ease: 'easeOut', duration: .2}, 
-					x: -50
+					//x: -50
 				}}
 			>
 				{children}
