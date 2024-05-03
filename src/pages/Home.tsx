@@ -7,7 +7,7 @@ import { useLoaderData } from 'react-router-dom'
 import { Website } from '../sanity/sanity-types'
 import { usePage } from '@/utils/my-store'
 import { useLocation } from 'react-router-dom'
-import { useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 
 function Home() {
 	const [ previews, website ] = useLoaderData() as [ Preview[], Website ]
@@ -19,18 +19,21 @@ function Home() {
 	},[setPageOpen,location])
 
 		
-	return (<div className='min-h-screen'>
-		<AnimationWrapper pageOpen={pageOpen}>
-			<div  className="flex flex-col relative sm:px-8 pb-20 items-center min-h-[100vh]">
-				<Hero website={ website } />
-				<div className="flex flex-col items-center gap-y-10 mb-[160px]">
-				{previews?.map(( preview: Preview, index: number ) =>
-					<PreviewCard key={index} preview={preview}/>
-				)}
-				</div>
+	return (
+		<Suspense>
+			<div className='min-h-screen'>
+				<AnimationWrapper pageOpen={pageOpen}>
+					<div  className="flex flex-col relative sm:px-8 pb-20 items-center min-h-[100vh]">
+						<Hero website={ website } />
+						<div className="flex flex-col items-center gap-y-10 mb-[160px]">
+							{previews?.map(( preview: Preview, index: number ) =>
+								<PreviewCard key={index} preview={preview}/>
+							)}
+						</div>
+					</div>
+				</AnimationWrapper>
 			</div>
-		</AnimationWrapper>
-		</div>
+		</Suspense>
 	)
 }
 
