@@ -1,7 +1,7 @@
 //import { NavigationMenuLink } from "@radix-ui/react-navigation-menu" 
 import { PortableTextComponents, PortableText } from "@portabletext/react"
 import { Link,useLocation } from "react-router-dom"
-import { Preview } from "@/sanity/sanity-types"
+import { Picture, Preview } from "@/sanity/sanity-types"
 import { urlFor } from "@/sanity/client"
 import { useState } from "react"
 import { usePage } from "@/utils/my-store"
@@ -27,14 +27,7 @@ type Prop = {
 }
 
 
-export default function ProjectsNavBar({	previews, 
-																					//hamMenuCurry, 
-																					setNavDrawer,
-																					openCurry,   
-																					navBar, 
-																					setForceClose, 
-																					forceClose,
-																					workHover } : Prop) {
+export default function ProjectsNavBar({	previews, setNavDrawer, openCurry, navBar, setForceClose, forceClose, workHover } : Prop) {
 	const [loading, setLoading] = useState(true)
 	const { setPageOpen } = usePage()
 	
@@ -80,14 +73,14 @@ export default function ProjectsNavBar({	previews,
 								<div className="flex flex-row h-full justify-start gap-x-4 items-center">
 									<div className={`relative flex flex-col w-[200px] h-full justify-center`}>
 										<img 
-											src={urlFor(preview.picture?.image)?.width(200).url()}
+											src={urlFor(((preview.picture as unknown) as Picture).image)?.width(200).url()}
 											alt="picture"
 											className={`w-full ${loading ? 'h-0' :''}`}
 											onLoad={loaderHandler}
 										/>
 										{loading && 
 											<img 
-												src={urlFor(preview.picture?.image)?.width(20).url()}
+												src={urlFor(((preview.picture as unknown) as Picture).image)?.width(20).url()}
 												alt="picture"
 												className={`w-full`}
 											/>}
@@ -99,7 +92,7 @@ export default function ProjectsNavBar({	previews,
 										</h1>
 											<PortableText
 												components={components}
-												value={preview.navBarDescription}
+												value={preview.navBarDescription!}
 											/>
 									</div>
 								</div>

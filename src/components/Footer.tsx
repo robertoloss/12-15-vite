@@ -18,8 +18,8 @@ export default function Footer() {
 	const iconsArray : Picture[][] = []
 	if (website?.icons?.length) {
 		for (let i=0; i<website.icons.length; i++) {
-			const icon = website.icons![i]
-			const iconHover = website.icons_hover![i]
+			const icon = website.icons![i] as unknown as Picture
+			const iconHover = website.icons_hover![i] as unknown as Picture
 			iconsArray.push([icon, iconHover])
 		}
 	}

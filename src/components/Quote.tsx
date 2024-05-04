@@ -1,6 +1,6 @@
 import { PortableText } from "@portabletext/react"
 import { PortableTextComponents } from "@portabletext/react"
-import { QuoteType } from "@/sanity/sanity-types"
+import { Quote as QuoteType } from "@/sanity/sanity-types"
 
 const components : PortableTextComponents = {
   block: {

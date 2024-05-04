@@ -1,8 +1,8 @@
+import { Section } from "@/sanity/sanity-types"
 import { PortableText, PortableTextComponents } from "@portabletext/react"
-import { SectionType } from "@/sanity/sanity-types"
 
 type Props = {
-	section: SectionType
+	section: Section 
 }
 
 const components : PortableTextComponents = {

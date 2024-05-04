@@ -1,10 +1,10 @@
 import { urlFor } from "@/sanity/client"
 import useMediaQuery from "@/utils/useMediaQuery"
-import { Picture, PictureSectionType } from "@/sanity/sanity-types"
+import { Picture, Picture_section } from "@/sanity/sanity-types"
 
 
 type Props = {
-	pictureSection : PictureSectionType
+	pictureSection : Picture_section
 	index : number
 	len : number
 	thisBlueNextWhite : boolean | undefined
@@ -24,7 +24,7 @@ export default function PictureSection({ pictureSection , index, len, thisBlueNe
 				<div className={`flex justify-between  gap-x-8 gap-y-8 h-fit`}
 					style={{ flexDirection: `${screen < 640 ? 'column' : 'row'}` }}
 				>
-					{pictureSection?.pictures?.map((picture: Picture , key: number) => 
+					{((pictureSection?.pictures as unknown) as Picture[]).map((picture: Picture , key: number) => 
 						<div className={ `flex flex-col relative w-full h-fit` } key={key}>
 								<img src={urlFor(picture.image!)?.width(2400).url()} alt=""/>
 						</div>

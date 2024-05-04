@@ -1,6 +1,6 @@
 import SectionTop from "./SectionTop"
 import { createColumns } from "@/utils/create-columns"
-import { SectionType } from "@/sanity/sanity-types"
+import { Picture_section, Quote as QuoteType, Section as SectionType } from "@/sanity/sanity-types"
 import ThreeColumns from "./ThreeColumns"
 import Quote from "./Quote"
 import PictureSection from "./PictureSection"
@@ -22,13 +22,13 @@ export default function Section({ section, sectionNum } : Props) {
 
 		{section.three_cols_yesNo && <ThreeColumns columns={columns}/>}
 
-		{section.quote && <Quote quote={section.quote} author={section.quote.author!} /> }
+		{((section.quote as unknown) as QuoteType) && 
+			<Quote quote={((section.quote as unknown) as QuoteType)} author={((section.quote as unknown) as QuoteType).author!} /> }
 
-		{section.picture_sections  && section.picture_sections
-		.map((pSection: typeof section.picture_sections[0], key: number) => {
+		{((section.picture_sections as unknown) as SectionType[])  && ((section.picture_sections as unknown) as Picture_section[]).map((pSection, key: number) => {
 				const thisBlueNextWhite = key < section.picture_sections!.length -1 &&
 																pSection.background_blue &&
-																!section.picture_sections![key + 1].background_blue
+																!((section.picture_sections as unknown) as Picture_section[])[key + 1].background_blue
 				return	<PictureSection 
 									pictureSection={pSection} 
 									len={section.picture_sections!.length} 

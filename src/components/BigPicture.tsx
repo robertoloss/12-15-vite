@@ -1,6 +1,6 @@
 import useMediaQuery from "@/utils/useMediaQuery"
 import { urlFor } from "@/sanity/client"
-import { Project } from "@/sanity/sanity-types"
+import { Picture, Project } from "@/sanity/sanity-types"
 import { useState } from "react"
 
 type Props = {
@@ -16,12 +16,12 @@ export default function BigPicture({ project } : Props) {
 	const screen = useMediaQuery()
 	const imgUrl = project ? 
 									project.wide_picture ? 
-										urlFor(project.wide_picture.image)?.width(2400)?.url() 
+										urlFor((project.wide_picture as unknown as Picture).image)?.width(2400)?.url() 
 										: "" 
 									: "" 
 	const lqipUrl = project ? 
 									project.wide_picture ? 
-										urlFor(project.wide_picture.image)?.width(200)?.url() 
+										urlFor((project.wide_picture as unknown as Picture).image)?.width(200)?.url() 
 										: "" 
 									: ""
 	return (<>
