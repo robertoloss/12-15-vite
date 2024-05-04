@@ -42,8 +42,8 @@ export function createColumns( project : Project | SectionType ) : ColumnType[] 
 		column.iconsYes = threeCols?.are_there_icons ? threeCols.are_there_icons : false
 		column.title = colTitles[i];
 		column.content = colContents[i]
-		column.iconUrl = ((colIcons[i] as unknown) as Picture).image ? 
-												urlFor(((colIcons[i] as unknown) as Picture).image)?.width(28)?.url() : ""
+		column.iconUrl = ((colIcons[i] as unknown) as Picture)?.image ? 
+												urlFor(((colIcons[i] as unknown) as Picture)?.image)?.width(28)?.url() : ""
 		column.figure = colFigures[i]
 		columns.push(column)
 	}
