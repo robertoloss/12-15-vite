@@ -59,7 +59,9 @@ export default function Footer() {
 						Web developer | 	
 					</h1>
 					<h1 className="mr-1 ">
-						Roberto Loss						
+						<a href="https://robertoloss.netlify.app" target="_blank" className="hover:underline">
+							Roberto Loss						
+						</a>
 					</h1>
 				</div>
 			</div>
