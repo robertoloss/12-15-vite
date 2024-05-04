@@ -1,4 +1,4 @@
-import { Project } from "@/sanity/sanity-types";
+import { Project, Section as SectionType } from "@/sanity/sanity-types";
 import Section  from "@/components/Section";
 import ThreeColumns from "@/components/ThreeColumns";
 import HeroProject from "@/components/HeroProject";
@@ -31,7 +31,7 @@ export default function ProjectPage() {
 						{ project && <HeroProject project={project} /> }
 						{ (project && project.wide_picture) && <BigPicture project={project} /> }
 						{ project?.three_cols_yesNo && <ThreeColumns columns={columns} /> }
-						{ project?.sections?.map((section: typeof project.sections[0], key: number) => 
+						{ ((project?.sections as unknown) as SectionType[]).map((section, key: number) => 
 									<Section section={section} sectionNum={key} key={key}/>) }
 					</div>
 				</AnimationWrapper>

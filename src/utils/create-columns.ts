@@ -1,7 +1,7 @@
 import { urlFor } from "@/sanity/client";
-import { SectionType } from "@/sanity/sanity-types";
+import { Picture, Section as SectionType } from "@/sanity/sanity-types";
 import { Project } from "@/sanity/sanity-types";
-import { ThreeCols } from "@/sanity/sanity-types";
+import { Three_cols as ThreeCols } from "@/sanity/sanity-types";
 
 export type ColumnType = {
 	title: string, 
@@ -20,9 +20,9 @@ export function createColumns( project : Project | SectionType ) : ColumnType[] 
 	let threeCols : ThreeCols;
 	
 	if (isProject(project)) {
-		threeCols = project!.three_cols_proj!
+		threeCols = ((project!.three_cols_proj as unknown) as ThreeCols)
 	} else {
-		threeCols = project!.three_cols_in_section!
+		threeCols = ((project!.three_cols_in_section as unknown) as ThreeCols)
 	}
 	
 	const colTitles = threeCols?.columns_titles ? [ ...threeCols.columns_titles ] : []
@@ -42,7 +42,8 @@ export function createColumns( project : Project | SectionType ) : ColumnType[] 
 		column.iconsYes = threeCols?.are_there_icons ? threeCols.are_there_icons : false
 		column.title = colTitles[i];
 		column.content = colContents[i]
-		column.iconUrl = colIcons[i]?.image ? urlFor(colIcons[i]?.image)?.width(28)?.url() : ""
+		column.iconUrl = ((colIcons[i] as unknown) as Picture).image ? 
+												urlFor(((colIcons[i] as unknown) as Picture).image)?.width(28)?.url() : ""
 		column.figure = colFigures[i]
 		columns.push(column)
 	}
