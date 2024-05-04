@@ -27,7 +27,7 @@ export async function getWebsiteInfo() {
 
 export async function getPreviews() {
 	return await client.fetch(
-		`*[_type == "project"] | order(rank asc) { preview }`
+		`*[_type == "project" && hidden == false] | order(rank asc) { preview }`
 	)
 }
 

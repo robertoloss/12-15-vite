@@ -24,7 +24,7 @@ export default function PictureSection({ pictureSection , index, len, thisBlueNe
 				<div className={`flex justify-between  gap-x-8 gap-y-8 h-fit`}
 					style={{ flexDirection: `${screen < 640 ? 'column' : 'row'}` }}
 				>
-					{((pictureSection?.pictures as unknown) as Picture[]).map((picture: Picture , key: number) => 
+					{pictureSection?.pictures && ((pictureSection?.pictures as unknown) as Picture[]).map((picture: Picture , key: number) => 
 						<div className={ `flex flex-col relative w-full h-fit` } key={key}>
 								<img src={urlFor(picture.image!)?.width(2400).url()} alt=""/>
 						</div>

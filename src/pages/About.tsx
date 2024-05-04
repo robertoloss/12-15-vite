@@ -79,19 +79,19 @@ export default function About() {
 			<div className="relative flex flex-col w-full max-w-[640px] self-center mt-[40px] mb-[160px]"> 
 				<img 
 					className={`${loading ? 'h-0' : ''}`}
-					src={urlFor(((website.about_picture) as unknown as Picture).image)?.width(2400)?.url()}
+					src={website?.about_picture ? urlFor(((website.about_picture) as unknown as Picture).image)?.width(2400)?.url() : ""}
 					alt="img"
 					onLoad={loadingHandler}
 				/>
 				{loading && 
 				<img
 					className={`w-full`}
-					src={urlFor(((website.about_picture) as unknown as Picture).image)?.width(200)?.url()}
+					src={website?.about_picture ? urlFor(((website.about_picture) as unknown as Picture).image)?.width(200)?.url() : ""}
 					alt="img"
 				/>}
 				<h1 className={`sm:text-lg sm:font-medium self-center text-white -mt-[100px] sm:-mt-[200px] max-w-[400px] 
 					text-center px-6 ${(loading ) ? 'opacity-0' : ''}`}>
-					{((website.about_picture) as unknown as Picture).name}
+					{website?.about_picture ? ((website.about_picture) as unknown as Picture).name : ""}
 				</h1>
 			</div>
 		</div>}

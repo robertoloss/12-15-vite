@@ -73,14 +73,14 @@ export default function ProjectsNavBar({	previews, setNavDrawer, openCurry, navB
 								<div className="flex flex-row h-full justify-start gap-x-4 items-center">
 									<div className={`relative flex flex-col w-[200px] h-full justify-center`}>
 										<img 
-											src={urlFor(((preview.picture as unknown) as Picture).image)?.width(200).url()}
+											src={preview?.picture ? urlFor(((preview.picture as unknown) as Picture).image)?.width(200).url() : ""}
 											alt="picture"
 											className={`w-full ${loading ? 'h-0' :''}`}
 											onLoad={loaderHandler}
 										/>
 										{loading && 
 											<img 
-												src={urlFor(((preview.picture as unknown) as Picture).image)?.width(20).url()}
+												src={preview?.picture ? urlFor(((preview.picture as unknown) as Picture).image)?.width(20).url() : ""}
 												alt="picture"
 												className={`w-full`}
 											/>}

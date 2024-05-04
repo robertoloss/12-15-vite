@@ -10,7 +10,7 @@ export default function Root() {
 	const previews = useLoaderData() as Preview[]
 	for (const preview of previews) {
 		const picture = preview.picture as unknown as Picture
-		if (urlFor(picture.image )?.width(200).url()) {
+		if (urlFor(picture?.image)?.width(200).url()) {
 			preloadImage(urlFor(picture.image)!.width(200).url())
 		}
 	}

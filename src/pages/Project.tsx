@@ -31,7 +31,7 @@ export default function ProjectPage() {
 						{ project && <HeroProject project={project} /> }
 						{ (project && project.wide_picture) && <BigPicture project={project} /> }
 						{ project?.three_cols_yesNo && <ThreeColumns columns={columns} /> }
-						{ ((project?.sections as unknown) as SectionType[]).map((section, key: number) => 
+						{ project?.sections && ((project?.sections as unknown) as SectionType[]).map((section, key: number) => 
 									<Section section={section} sectionNum={key} key={key}/>) }
 					</div>
 				</AnimationWrapper>
