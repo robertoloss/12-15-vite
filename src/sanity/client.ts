@@ -33,7 +33,7 @@ export async function getPreviews() {
 
 export async function getProject(slug:string) {
 	return await client.fetch(
-		`*[_type == "project" && preview.slug == "${slug} && hidden==false"]`
+		`*[_type == "project" && preview.slug == "${slug}" && hidden==false]`
 	)
 }
 
