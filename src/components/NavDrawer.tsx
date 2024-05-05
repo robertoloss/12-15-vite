@@ -21,10 +21,11 @@ export default function NavDrawer({ hamMenuCurry, previews, setNavDrawer, setPag
  
 	return (
 		<motion.div 
-						initial={{opacity: 0, x: -16}}
-						animate={{opacity: 1, x: 0}}
-						transition={{duration: .3, ease: "easeOut"}}
-		className="absolute top-0 left-0 w-screen h-screen bg-background p-4 ">
+			initial={{opacity: 0, x: -16}}
+			animate={{opacity: 1, x: 0}}
+			transition={{duration: .3, ease: "easeOut"}}
+			className="absolute top-0 left-0 w-screen h-screen bg-background p-4 "
+		>
 			<div className="flex flex-col gap-y-10 w-full h-full">
 				<div className="flex flex-row h-fit w-full mt-1 justify-between items-center" >
 					<Link to={'/'}  className="w-fit text-2xl font-semibold select-none" >

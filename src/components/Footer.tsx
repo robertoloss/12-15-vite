@@ -26,7 +26,7 @@ export default function Footer() {
 
 	return (<>
 		{website && 
-		<div className="flex flex-col w-full h-[210px] items-center justify-center bg-[#EEEFF0] font-light px-6 gap-y-1">
+		<div className="flex flex-col w-full h-[210px] items-center justify-center bg-muted text-foreground font-light px-6 gap-y-1">
 			<div className="flex flex-row flex-wrap w-full max-w-[1200px] justify-between items-center gap-y-4">
 				<div className="flex flex-row flex-wrap gap-4 items-center">
 					<a 

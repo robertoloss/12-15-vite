@@ -10,7 +10,7 @@ import { useEffect } from "react"
 
 const components : PortableTextComponents = {
   block: {
-    normal: ({children } ) => <h1 className="text-lg font-normal text-left leading-6">{children}</h1>,
+    normal: ({children } ) => <h1 className="text-lg font-light text-left leading-6">{children}</h1>,
   },
 	marks: {
     em: ({children}) => <p className="text-lg font-normal text-destructive leading-6">{children}</p>,
@@ -18,7 +18,7 @@ const components : PortableTextComponents = {
 }
 const componentsExpertise : PortableTextComponents = {
   block: {
-    normal: ({children}) => <h1 className="text-lg font-normal text-center leading-6">{children}</h1>,
+    normal: ({children}) => <h1 className="text-lg font-light text-center leading-6">{children}</h1>,
   },
 	marks: {
     em: ({children}) => <p className="text-lg font-normal text-destructive leading-6">{children}</p>,
@@ -47,14 +47,14 @@ export default function About() {
 
 	return (
 	<Suspense>
-	<div className="min-h-screen">
+	<div className="min-h-screen text-foreground">
 		<AnimationWrapper pageOpen={pageOpen}>
 		<div className="flex flex-col min-h-[100vh] mb-[200px]">
 		{website && <div className="flex flex-col px-6"> 
 			<div className="py-10 flex flex-col w-full items-center">
 				<div className="flex flex-col items-center gap-y-4 w-full max-w-[640px]">
-					<div className="flex flex-col items-center">
-						<p className="font-bold text-2xl text-destructive">
+					<div className="flex flex-col gap-y-4 items-center">
+						<p className="font-bold text-4xl text-destructive">
 							About
 						</p>
 						<p className="font-bold text-2xl text-center">

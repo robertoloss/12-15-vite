@@ -13,12 +13,11 @@ type Props = {
 export default function PictureSection({ pictureSection , index, len, thisBlueNextWhite} : Props) {
 	
 	const width = pictureSection.extra_wide ? 1000 : 960
-	const bgColor = pictureSection.background_blue ? 'bg-bigpic' : 'bg-background'
 
 	const screen = useMediaQuery()
 
 	return (
-		<div className={`flex flex-col w-[calc(100%+64px)] ${bgColor} 
+		<div className={`flex flex-col w-[calc(100%+64px)] bg-muted 
 			h-fit  ${index === 0 ? 'pt-20' : 'pt-14 '} ${thisBlueNextWhite ? 'pb-20' : ''}  ${index === len-1 ? 'pb-20' : ''} ${len} px-8 gap-y-4 items-center`}	>
 			<div className={`flex flex-col w-full h-fit gap-y-8`} style = {{ maxWidth:`${width}px`}}>
 				<div className={`flex justify-between  gap-x-8 gap-y-8 h-fit`}
