@@ -31,7 +31,7 @@ export default function Hero({ website } : Props) {
 			<div className="flex flex-col max-w-[780px] w-full justify-center items-center gap-y-4 "> 
 				<h1 className="w-fit text-5xl  font-extrabold  text-center text-destructive">{website?.name}</h1>
 				<h1 className="text-2xl font-light text-center">{website?.title}</h1>
-				<div className="w-full h-0 border-t border-[B8B9BA]"/>
+				<div className="w-full h-0 border-t border-[#565A66]"/>
 				{website?.description && <PortableText components={components} value={website!.description!} />}
 			</div>
 		</div>

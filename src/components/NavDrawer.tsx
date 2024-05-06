@@ -54,7 +54,9 @@ export default function NavDrawer({ hamMenuCurry, previews, setNavDrawer, setPag
 								setNavDrawer={setNavDrawer} 
 								previews={previews} 
 								open={true} 
-								navBar={true}/>
+								navBar={true}
+								mobileDrawer={true}
+							/>
 						</div>	
 					</div>
 					<Link to={'/about'} onClick={hamMenuCurry('about')} 

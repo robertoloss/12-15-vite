@@ -14,6 +14,11 @@ const components : PortableTextComponents = {
     em: ({children}) => <p className="text-lg font-normal text-destructive leading-6">{children}</p>,
 	},
 }
+const componentsMobile : PortableTextComponents = {
+  block: {
+    normal: ({children}) => <h1 className=" font-thin text-lg leading-1 ">{children}</h1>,
+  },
+	}
 type Prop = {
 	previews: Preview[]
 	hamMenuCurry?: (s:string | undefined)=>()=>void
@@ -24,10 +29,11 @@ type Prop = {
 	forceClose?: boolean
 	workHover?: boolean
 	setNavDrawer?: (b:boolean)=>void
+	mobileDrawer?: boolean
 }
 
 
-export default function ProjectsNavBar({	previews, setNavDrawer, openCurry, navBar, setForceClose, forceClose, workHover } : Prop) {
+export default function ProjectsNavBar({	previews, setNavDrawer, openCurry, navBar, setForceClose, forceClose, workHover, mobileDrawer } : Prop) {
 	//const [_loading, setLoading] = useState(true)
 	const { setPageOpen } = usePage()
 	
@@ -56,9 +62,11 @@ export default function ProjectsNavBar({	previews, setNavDrawer, openCurry, navB
 	return (
 		<>{!forceClose && 
 		<div 
-			className={`flex z-20 flex-col w-fit bg-muted px-8 py-2  text-foreground transition-[scale()]
-				     ${navBar ? 'mt-8' : ''}
-						 ${workHover ? 'scale-100' : 'scale-90' }`}
+			className={`
+				flex z-20 flex-col w-fit ${mobileDrawer ? 'rounded-xl gap-y-4' : ''} bg-muted px-8 py-2  
+				text-foreground transition-[scale()] ${navBar ? 'mt-8' : ''}
+				${workHover ? 'scale-100' : 'scale-90' }
+			`}
 			onMouseEnter={openCurry ? openCurry("open") : ()=>{}}
 			onMouseLeave={openCurry ? openCurry("close") : ()=>{}}
 		>
@@ -87,11 +95,14 @@ export default function ProjectsNavBar({	previews, setNavDrawer, openCurry, navB
 									</div>*/}
 									<div className="flex flex-col h-full w-full overflow-hidden
 										text-ellipsis items-start justify-center">
-										<h1 className="w-full transition font-medium group-hover:text-destructive">
+										<h1 className={`
+											w-full ${mobileDrawer ? 'text-2xl ' : ''} transition 
+											font-medium group-hover:text-destructive
+										`}>
 											{preview.navBarTitle} 
 										</h1>
 											<PortableText
-												components={components}
+												components={mobileDrawer ? componentsMobile : components}
 												value={preview.navBarDescription!}
 											/>
 									</div>
