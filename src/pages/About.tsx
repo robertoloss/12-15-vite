@@ -51,17 +51,17 @@ export default function About() {
 		<AnimationWrapper pageOpen={pageOpen}>
 		<div className="flex flex-col min-h-[100vh] mb-[200px]">
 		{website && <div className="flex flex-col px-6"> 
-			<div className="py-10 flex flex-col w-full items-center">
+			<div className="py-20 flex flex-col w-full items-center">
 				<div className="flex flex-col items-center gap-y-4 w-full max-w-[640px]">
 					<div className="flex flex-col gap-y-4 items-center">
-						<p className="font-bold text-4xl text-destructive">
+						<p className="text-4xl font-semibold text-destructive">
 							About
 						</p>
-						<p className="font-bold text-2xl text-center">
+						<p className="font-semibold text-xl text-center">
 							{website?.name}
 						</p>
 					</div>
-					<div className="w-full h-0 border-t border-[#B8B9BA]"/>
+					<div className="w-full h-0 border-t border-[#565A66]"/>
 					<PortableText components={components} value={website.about_description!} />
 				</div>
 			</div>
@@ -72,7 +72,7 @@ export default function About() {
 							Expertise	
 						</p>
 					</div>
-					<div className="w-full h-0 border-t border-[#B8B9BA]"/>
+					<div className="w-full h-0 border-t border-[#565A66]"/>
 					<PortableText components={componentsExpertise} value={website.about_expertise!} />
 				</div>
 			</div>

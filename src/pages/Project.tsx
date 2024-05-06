@@ -34,7 +34,7 @@ export default function ProjectPage() {
 						{ project?.sections && ((project?.sections as unknown) as SectionType[]).map((section, key: number) => 
 									<Section section={section} sectionNum={key} key={key}/>) }
 					</div>
-					<div className="bg-background w-full h-[400px]" />
+					<div className="bg-background w-full h-[132px]" />
 				</AnimationWrapper>
 			</div>
 		</Suspense>

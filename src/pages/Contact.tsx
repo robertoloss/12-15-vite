@@ -82,9 +82,9 @@ export default function Contact() {
 
   return (<div className='min-h-screen text-foreground'>
 		<AnimationWrapper pageOpen={pageOpen}>
-			<div className='flex flex-col w-full items-center py-10 gap-y-10 
-				sm:py-14 px-6 sm:gap-y-10 min-h-[calc(100vh-290px)]'>
-				<h1 className='text-4xl font-bold text-destructive'>
+			<div className="flex flex-col w-full items-center py-20  
+				 px-6 gap-y-4 min-h-[calc(100vh-290px)]">
+				<h1 className="text-4xl font-semibold text-destructive">
 					Contact
 				</h1>
 				<p className='w-full max-w-[400px] text-center text-lg'>
