@@ -54,7 +54,7 @@ export default function About() {
 			<div className="py-20 flex flex-col w-full items-center">
 				<div className="flex flex-col items-center gap-y-4 w-full max-w-[640px]">
 					<div className="flex flex-col gap-y-4 items-center">
-						<p className="text-4xl font-semibold text-destructive">
+						<p className="text-4xl font-semibold text-center text-destructive">
 							About
 						</p>
 						<p className="font-semibold text-xl text-center">

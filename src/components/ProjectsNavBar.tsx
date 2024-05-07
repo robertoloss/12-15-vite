@@ -63,8 +63,8 @@ export default function ProjectsNavBar({	previews, setNavDrawer, openCurry, navB
 		<>{!forceClose && 
 		<div 
 			className={`
-				flex z-20 flex-col w-fit ${mobileDrawer ? 'rounded-xl gap-y-4' : ''} bg-muted px-8 py-2  
-				text-foreground transition-[scale()] ${navBar ? 'mt-8' : ''}
+				flex z-20 flex-col w-fit ${mobileDrawer ? 'rounded-xl gap-y-4' : 'bg-muted'}  px-8 py-2  
+				text-foreground transition-[scale()] ${navBar ? '' : ''}
 				${workHover ? 'scale-100' : 'scale-90' }
 			`}
 			onMouseEnter={openCurry ? openCurry("open") : ()=>{}}
@@ -79,20 +79,6 @@ export default function ProjectsNavBar({	previews, setNavDrawer, openCurry, navB
 						<Link onClick={clickHandlerCurry(preview.slug)} to={`/projects/${preview.slug}`}>
 							<div className="flex flex-col w-full h-20  p-0 ">
 								<div className="flex flex-row h-full justify-start gap-x-4 items-center">
-									{/*<div className={`relative flex flex-col w-[200px] h-full justify-center`}>
-									{/*<img 
-									src={preview?.picture ? urlFor(((preview.picture as unknown) as Picture).image)?.width(200).url() : ""}
-									alt="picture"
-									className={`w-full ${loading ? 'h-0' :''}`}
-									onLoad={loaderHandler}
-									/>
-									{loading && 
-									<img 
-									src={preview?.picture ? urlFor(((preview.picture as unknown) as Picture).image)?.width(20).url() : ""}
-									alt="picture"
-									className={`w-full`}
-									/>}
-									</div>*/}
 									<div className="flex flex-col h-full w-full overflow-hidden
 										text-ellipsis items-start justify-center">
 										<h1 className={`

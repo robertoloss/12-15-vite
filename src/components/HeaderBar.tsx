@@ -49,13 +49,14 @@ export default function HeaderBar({ previews } : Props) {
 			<div className="flex flex-row select-none h-full w-full max-w-7xl justify-between items-center  p-4" >
 				{!navDrawer && <Link to={'/'}
 					className="w-fit text-2xl font-raleway select-none font-light text-destructive"
-					onClick={()=>setPageOpen(false,'',location)}
 				>
 					<div className={`
-						flex flex-row bg-destructive text-background text-2xl
-						font-extrabold p-4 rounded-sm w-[52px] h-[52px] items-center justify-center
-						hover:bg-[#FDCECF] transition
-					`}>
+							flex flex-row bg-destructive text-background text-2xl
+							font-extrabold p-4 rounded-sm w-[52px] h-[52px] items-center justify-center
+							hover:bg-[#FDCECF] transition
+						`}
+						onClick={()=>setPageOpen(false,'',location)}
+					>
 						AJ
 					</div>
 				</Link>}

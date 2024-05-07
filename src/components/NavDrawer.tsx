@@ -4,6 +4,7 @@ import ProjectsNavBar from "./ProjectsNavBar";
 import { Preview } from "@/sanity/sanity-types";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 
 
 type Props = {
@@ -36,11 +37,19 @@ export default function NavDrawer({ hamMenuCurry, previews, setNavDrawer, setPag
 					</div>
 				</div>
 				<div className="flex flex-col items-center w-full select-none">
-					<h1 className={`self-start text-2xl font-normal w-full `}
-						onClick={showHandler}
-					>
-						Work
-					</h1>
+					<div className="flex flex-row gap-x-4 w-full items-center justify-start">
+						<h1 className={`self-start text-2xl font-normal`}
+							onClick={showHandler}
+						>
+							Work
+						</h1>
+						<ChevronDown size={32} strokeWidth={1}
+							style={{
+								transform: `${show ? 'rotate(180deg)' : 'rotate(0deg)'}`,
+								transition: 'all 200ms ease-in-out'
+							}}
+						/>
+					</div>
 					<div 
 						style = {{  
 							display: 'grid', 
