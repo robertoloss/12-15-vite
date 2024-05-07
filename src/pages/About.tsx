@@ -68,7 +68,7 @@ export default function About() {
 			<div className="py-10 flex flex-col w-full items-center">
 				<div className="flex flex-col items-center gap-y-4 w-full max-w-[640px]">
 					<div className="flex flex-col items-center">
-						<p className="font-bold text-2xl text-center">
+						<p className="font-medium text-2xl text-center">
 							Expertise	
 						</p>
 					</div>
