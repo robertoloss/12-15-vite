@@ -85,10 +85,10 @@ export default function Contact() {
 			<div className="flex flex-col w-full items-center py-20  
 				 px-6 gap-y-4 min-h-[calc(100vh-290px)]">
 				<h1 className="text-4xl font-semibold text-destructive">
-					Contact
+					Thanks for visiting my website!
 				</h1>
 				<p className='w-full max-w-[400px] text-center text-lg'>
-					If you'd like to get in touch, please send a quick message along with your name and email address
+					I'd love to hear from you!
 				</p>
 					<div className='flex flex-col w-full max-w-[400px]'>
 						<form 
