@@ -25,7 +25,7 @@ export default function SectionTop({ section } : Props) {
 				`}>
 					{section.section_number}
 				</p>
-				<p className="font-bold text-2xl text-center text-foreground">
+				<p className="font-medium text-2xl text-center text-foreground">
 					{section.section_title}
 				</p>
 				<div className="w-full h-0 border-t border-[#8e9098]"/>

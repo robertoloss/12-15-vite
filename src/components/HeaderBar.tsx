@@ -53,7 +53,7 @@ export default function HeaderBar({ previews } : Props) {
 					<div className={`
 							flex flex-row bg-destructive text-background text-2xl
 							font-extrabold p-4 rounded-sm w-[52px] h-[52px] items-center justify-center
-							hover:bg-[#FDCECF] transition
+							transition
 						`}
 						onClick={()=>setPageOpen(false,'',location)}
 					>

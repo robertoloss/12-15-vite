@@ -8,7 +8,7 @@ import { usePage } from "@/utils/my-store"
 
 const components : PortableTextComponents = {
   block: {
-    normal: ({children}) => <h1 className="text-sm font-normal leading-1 ">{children}</h1>,
+    normal: ({children}) => <h1 className="text-sm font-light leading-1 ">{children}</h1>,
   },
 	marks: {
     em: ({children}) => <p className="text-lg font-normal text-destructive leading-6">{children}</p>,
@@ -64,7 +64,7 @@ export default function ProjectsNavBar({	previews, setNavDrawer, openCurry, navB
 		<div 
 			className={`
 				flex z-20 flex-col w-fit ${mobileDrawer ? 'rounded-xl gap-y-4' : 'bg-muted'}  px-8 py-2  
-				text-foreground transition-[scale()] ${navBar ? '' : ''}
+				text-foreground transition-[scale()] ${navBar ? '8' : ''}
 				${workHover ? 'scale-100' : 'scale-90' }
 			`}
 			onMouseEnter={openCurry ? openCurry("open") : ()=>{}}

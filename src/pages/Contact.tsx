@@ -69,7 +69,7 @@ export default function Contact() {
 	}
 
 	function inputClassName(input: "nameOrEmail" | "message") : string {
-		const common = `flex px-2 pt-4 rounded-sm border-2 border-white 
+		const common = `flex px-2 pt-4 rounded-sm border-2 border-white text-primary 
 				focus:outline-none focus:ring-0 focus:border-[#565a66]  focus:border-2`
 		const specific = {
 			nameOrEmail: ' h-11',
@@ -87,7 +87,7 @@ export default function Contact() {
 				<h1 className="text-4xl text-center font-semibold text-destructive">
 					Thanks for visiting my website!
 				</h1>
-				<p className='w-full max-w-[400px] text-center text-lg'>
+				<p className='w-full max-w-[400px] text-center text-lg font-light'>
 					I'd love to hear from you!
 				</p>
 					<div className='flex flex-col w-full max-w-[400px]'>
@@ -145,7 +145,7 @@ export default function Contact() {
 							</div>
 						<div className='h-12 flex flex-col items-center justify-center'>
 							{(showReCaptcha && !submitted) && <h1> Click on the reCAPTCHA to send the email </h1>}
-							{submitted && <h1 className='py-1 px-2  font-semibold'>Email Sent!</h1>}
+							{submitted && <h1 className='py-1 px-2 font-light '>Email Sent!</h1>}
 							{!showReCaptcha && 
 								<button
 									className='py-1 px-2 bg-destructive hover:bg-[#C75D5D] w-[80px] h-fit 
