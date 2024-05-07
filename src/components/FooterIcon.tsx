@@ -16,7 +16,12 @@ export default function FooterIcon({iconArr} : {iconArr: Picture[], index: numbe
 
 	
 	return (
-		<div className="w-8"  onMouseEnter={()=>setHover(true)} onMouseLeave={()=>setHover(false)}>
+		<div 
+			className="w-8"  
+			onMouseEnter={()=>setHover(true)} 
+			onMouseLeave={()=>setHover(false)}
+			onClick={()=>setHover(false)}
+		>
 			<a href={`${icon.url}`} target="_blank">
 				{!hover && <img src={urlFor(icon.image)?.width(32).url()} /> }
 				{hover && <img src={urlFor(iconHover.image)?.width(32).url()} /> }
