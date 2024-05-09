@@ -91,8 +91,9 @@ export default function Contact() {
 				<h1 className="text-4xl text-center font-semibold text-destructive">
 					Thanks for visiting my website!
 				</h1>
-				<p className='w-full max-w-[400px] text-center text-lg font-light'>
-					I'd love to hear from you!
+				<p className='w-full max-w-[440px] text-center text-lg font-light'>
+					Looking for a Product Designer or eager to explore some creative ideas? I’d love to hear from you! 
+					Send me an email at <a href="mailto:amynicolejackson@gmail.com" target='_blank' className='text-destructive'> amynicolejackson@gmail.com </a> or simply fill in the form below.
 				</p>
 					<div className='flex flex-col w-full max-w-[400px]'>
 						<form 
