@@ -12,6 +12,9 @@ const components : PortableTextComponents = {
 	marks: {
     em: ({children}) => <p className="text-lg font-normal text-destructive leading-6">{children}</p>,
 	},
+	list: {
+    number: ({children}) => <li className="text-lg font-light text-left text-foreground leading-6">{children}</li>,
+  },
 }
 
 export default function SectionTop({ section } : Props) {
