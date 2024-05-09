@@ -21,11 +21,11 @@ function Home() {
 		
 	return (
 		<Suspense>
-			<div className='min-h-screen'>
+			<div className='flex flex-col min-h-screen w-full'>
 				<AnimationWrapper pageOpen={pageOpen}>
 					<div  className="flex flex-col relative sm:px-8 pb-20 items-center min-h-[100vh]">
 						<Hero website={ website } />
-						<div className="flex flex-col items-center gap-y-10 mb-[160px]">
+						<div className="flex flex-col items-center gap-y-10 mb-[160px] w-full">
 							{previews?.map(( preview: Preview, index: number ) =>
 								<PreviewCard key={index} preview={preview}/>
 							)}

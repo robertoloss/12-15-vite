@@ -37,9 +37,10 @@ export default function NavDrawer({ hamMenuCurry, previews, setNavDrawer, setPag
 					</div>
 				</div>
 				<div className="flex flex-col items-center w-full select-none">
-					<div className="flex flex-row gap-x-4 w-full items-center justify-start">
+					<div className="flex flex-row gap-x-4 w-full items-center justify-start"
+						onClick={showHandler}
+					>
 						<h1 className={`self-start text-2xl font-normal`}
-							onClick={showHandler}
 						>
 							Work
 						</h1>
