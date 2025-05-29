@@ -12,7 +12,7 @@ type Props = {
 	previews: Preview[]
 }
 export default function HeaderBar({ previews } : Props) {
-	const [shadow, setShadow] = useState<boolean>(false)
+	const [_shadow, setShadow] = useState<boolean>(false)
 	const [navDrawer, setNavDrawer] = useState<boolean>(false)
 	const { setPageOpen } = usePage()
 
@@ -36,7 +36,6 @@ export default function HeaderBar({ previews } : Props) {
 	function hamMenuCurry(slug:string | undefined) {
 		return ()=>	hamMenuHandler(slug)
 	}
-	console.log(shadow)
 	
 	return (
 		<div className={`top-0 sticky z-50 flex flex-col select-none text-foreground 

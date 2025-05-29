@@ -1,9 +1,11 @@
 import AnimationWrapper from '@/components/AnimationWrapper';
+import z from 'zod';
 import emailjs from '@emailjs/browser';
 import ReCAPTCHA from "react-google-recaptcha";
 import { useState, useEffect, useRef } from 'react';
 import { usePage } from '@/utils/my-store';
 import { useLocation } from 'react-router-dom';
+import { cn } from '@/lib/utils';
 
 export default function Contact() {
   const form = useRef<HTMLFormElement>(null);
@@ -11,11 +13,15 @@ export default function Contact() {
 	const emailInputRef = useRef<HTMLInputElement>(null)
 	const messageInputRef = useRef<HTMLTextAreaElement>(null)
 	const captchaRef = useRef<ReCAPTCHA | null>(null)
+
 	const [submitted, setSubmitted] = useState(false)
-	const [nameFocus, setNameFocus] = useState(false)
-	const [emailFocus, setEmailFocus] = useState(false)
-	const [messageFocus, setMessageFocus] = useState(false)
+	const [_nameFocus, setNameFocus] = useState(false)
+	const [_emailFocus, setEmailFocus] = useState(false)
+	const [_messageFocus, setMessageFocus] = useState(false)
+  const [messageValue, setMessageValue] = useState<string | undefined>("")
 	const [showReCaptcha, setShowReCaptcha] = useState(false)
+  const [error, setError] = useState(false)
+
 	const { pageOpen, setPageOpen } = usePage()
 	const location = useLocation()
 	
@@ -34,13 +40,37 @@ export default function Contact() {
 				console.log(error.text);
 		});
 		setSubmitted(true)
+    setTimeout(() => {
+      setSubmitted(false)
+      setShowReCaptcha(false)
+    }, 3000)
 		if (nameInputRef.current) nameInputRef.current.value = ""
 		if (emailInputRef.current) emailInputRef.current.value = ""
 		if (messageInputRef.current) messageInputRef.current.value = ""
   };
+  
+  useEffect(()=>{
+    if (messageInputRef.current) {
+      messageInputRef.current.style.height = 'auto'
+      messageInputRef.current.style.height = `${messageInputRef.current.scrollHeight}px`
+    }
+  },[messageValue, _messageFocus])
+  
+  const emailSchema = z.string().email().nonempty()
+  const nameSchema = z.string().nonempty()
+  const messageSchema = z.string().nonempty()
 
   function buttonHandler() {
-		setShowReCaptcha(true)
+    try {
+      emailSchema.parse(emailInputRef.current!.value)
+      nameSchema.parse(nameInputRef.current!.value)
+      messageSchema.parse(messageInputRef.current!.value)
+      console.log(nameSchema.parse(nameInputRef.current!.value))
+      setShowReCaptcha(true)
+    } catch(error) {
+      setError(true)
+      return
+    }
 	}
 
 	function nameLabelHandler() {
@@ -55,30 +85,38 @@ export default function Contact() {
 		messageInputRef.current?.focus()
 		setMessageFocus(true)
 	}
-
-	function labelClassName(input: "name" | "email" | "message") : string {
-		const common = ' flex absolute top-[10px] z-10 ml-2 font-normal transition-all ease-out duration-100 '
-		const onFocus = ' top-[4px] left-[2px] text-[#565a66] text-xs ' 
-		const onBlur = ' text-gray-500'
-		const specific = {
-			name: nameFocus || nameInputRef.current?.value  ? onFocus : onBlur, 
-			email: emailFocus || emailInputRef.current?.value  ? onFocus : onBlur,
-			message: messageFocus || messageInputRef.current?.value  ? onFocus : onBlur,
-		}
-		return  specific[input] + common 
-	}
+  
+  function isThisErroring(value: string | undefined, schemaFn: (s: string | undefined) => string) {
+    try {
+      schemaFn(value)
+      console.log("isThisErroring: false", value)
+      return false
+    } catch {
+      console.log("isThisErroring: false", value)
+      return true
+    }
+  }
 
 	function inputClassName(input: "nameOrEmail" | "message") : string {
-		const common = `flex px-2 pt-4 rounded-sm border-2 border-white text-primary 
-				focus:outline-none focus:ring-0 focus:border-[#565a66]  focus:border-2`
+		const common = `flex flex-col items-center px-2 pt-6 pb-2 rounded-sm border-2 text-primary 
+				focus:outline-none focus:ring-0 focus:border-blue-600  focus:border-2 `
 		const specific = {
-			nameOrEmail: ' h-11',
-			message:  ' h-20 ',
+			nameOrEmail: ' h-[56px] ',
+			message:  ' h-[64px] ',
 		}
 		return specific[input] + common
 	}
+  const labelTailwind = [
+    'flex absolute top-[16px] text-primary z-10 ml-[10px] font-normal', 
+    "transition-all ease-out duration-100",
+    "peer-focus:top-[10px] peer-focus:text-xs", 
+    "text-gray-400 peer-focus:text-blue-800"
+  ]
+  const inputFilledTailwind = "top-[10px] text-xs text-blue-800"
 
 	window.scrollTo(0,0)
+
+  console.log("error", error)
 
   return (<div className='min-h-screen text-foreground'>
 		<AnimationWrapper pageOpen={pageOpen}>
@@ -101,60 +139,118 @@ export default function Contact() {
 							onSubmit={(e)=>e.preventDefault()} 
 							className='flex flex-col w-full gap-y-4'>
 							<div className='flex relative flex-col'>
-								<label 
-									className={labelClassName("name")}
-									onClick={nameLabelHandler}
-								> 
-									Name 
-								</label>
 								<input 
 									ref={nameInputRef}
 									type="text"
 									name="user_name"
-									className={inputClassName("nameOrEmail")}
-									onFocus={()=>setNameFocus(true)}
-									onBlur={()=>setNameFocus(false)}
+                  placeholder=' '
+									className={
+                    'peer' + 
+                    inputClassName("nameOrEmail") +
+                    `${error && isThisErroring(nameInputRef.current?.value, nameSchema.parse)
+                      ? "border-destructive focus:border-destructive" 
+                      : "border-white"
+                    }`
+                  }
+									onFocus={()=>{
+                    setError(false)
+                    setNameFocus(true)}
+                  }
+									onBlur={()=>{
+                    setNameFocus(false)
+                  }}
 								/>
+								<label 
+									className={cn(
+                    "cursor-pointer",
+                    "pointer-events-none",
+                    ...labelTailwind,
+                    {
+                      [inputFilledTailwind] : nameInputRef.current?.value
+                    }
+                  )}
+									onClick={nameLabelHandler}
+								> 
+									Name 
+								</label>
 							</div>
 							<div className='flex relative flex-col'>
-								<label 
-									className={labelClassName("email")}
-									onClick={emailLabelHandler}
-								> 
-									Email 
-								</label>
 								<input 
 									ref={emailInputRef}
 									type="email"
 									name="user_email"
-									className={inputClassName("nameOrEmail")}
-									onFocus={()=>setEmailFocus(true)}
+									className={
+                    'peer' + 
+                    inputClassName("nameOrEmail") +
+                    `${error && isThisErroring(emailInputRef.current?.value, emailSchema.parse)
+                      ? "border-destructive focus:border-destructive" 
+                      : "border-white"
+                    }`
+                  }
+									onFocus={()=>{
+                    setError(false)
+                    setEmailFocus(true)}
+                  }
 									onBlur={()=>setEmailFocus(false)}
 								/>
+								<label 
+									className={cn(
+                    "cursor-pointer",
+                    "pointer-events-none",
+                    ...labelTailwind,
+                    {
+                      [inputFilledTailwind]: emailInputRef.current?.value
+                    }
+                  )}
+									onClick={emailLabelHandler}
+								> 
+									Email 
+								</label>
 							</div>
 
 							<div className='flex relative flex-col'>
+								<textarea 
+									ref={messageInputRef}
+									name="message"
+                  value={messageValue}
+                  onChange={(e)=>setMessageValue(e.target.value)}
+									className={
+                    'peer' + ' p-10 ' + 
+                    inputClassName("message") +
+                    `${error && isThisErroring(messageInputRef.current?.value, messageSchema.parse)
+                      ? "border-destructive focus:border-destructive" 
+                      : "border-white"
+                    }`
+                  }
+									onFocus={()=>{
+                    setError(false)
+                    setMessageFocus(true)}
+                  }
+									onBlur={()=>setMessageFocus(false)}
+                  style={{ height: '64px' }}
+								/>
 								<label 
-									className={labelClassName("message")}
+									className={cn(
+                    "cursor-pointer",
+                    "pointer-events-none",
+                    ...labelTailwind,
+                    {
+                      [inputFilledTailwind]: messageInputRef.current?.value
+                    }
+                  )}
 									onClick={messageLabelHandler}
 								> 
 									Message 
 								</label>
-								<textarea 
-									ref={messageInputRef}
-									name="message"
-									className={inputClassName("message")}
-									onFocus={()=>setMessageFocus(true)}
-									onBlur={()=>setMessageFocus(false)}
-								/>
 							</div>
 						<div className='h-12 flex flex-col items-center justify-center'>
 							{(showReCaptcha && !submitted) && <h1> Click on the reCAPTCHA to send the email </h1>}
 							{submitted && <h1 className='py-1 px-2 font-light '>Email Sent!</h1>}
 							{!showReCaptcha && 
 								<button
-									className='py-1 px-2 bg-destructive hover:bg-[#C75D5D] w-[80px] h-fit 
-										self-center rounded-full text-white cursor-pointer'
+									className='py-1 px-2 bg-destructive hover:bg-[#C75D5D] w-[88px] h-10
+                    rounded-md
+										self-center text-white cursor-pointer'
 									onClick={buttonHandler}
 								>
 									Send 
@@ -170,6 +266,14 @@ export default function Contact() {
 									onChange={recaptchaOnChange}
 									className='self-center -mt-[74px] z-20'
 								/>
+								<button
+									className='py-1 px-2 bg-destructive mt-4 hover:bg-[#C75D5D] w-[88px] h-10
+                    rounded-md
+										self-center text-white cursor-pointer'
+									onClick={()=>setShowReCaptcha(false)}
+								>
+									Cancel 
+								</button>
 							</div>
 						}
 					</form>

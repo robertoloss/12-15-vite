@@ -33,6 +33,7 @@
     "sort-by": "^1.2.0",
     "tailwind-merge": "^2.1.0",
     "vite-plugin-require": "^1.1.14",
+    "zod": "^3.25.34",
     "zustand": "^4.4.7"
   },
   "devDependencies": {
