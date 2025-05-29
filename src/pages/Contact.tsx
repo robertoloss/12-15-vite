@@ -44,6 +44,7 @@ export default function Contact() {
       setSubmitted(false)
       setShowReCaptcha(false)
     }, 3000)
+    setMessageValue("")
 		if (nameInputRef.current) nameInputRef.current.value = ""
 		if (emailInputRef.current) emailInputRef.current.value = ""
 		if (messageInputRef.current) messageInputRef.current.value = ""
