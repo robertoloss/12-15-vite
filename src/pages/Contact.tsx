@@ -115,9 +115,6 @@ export default function Contact() {
   ]
   const inputFilledTailwind = "top-[10px] text-xs text-blue-800"
 
-	window.scrollTo(0,0)
-
-  console.log("error", error)
 
   return (<div className='min-h-screen text-foreground'>
 		<AnimationWrapper pageOpen={pageOpen}>
